@@ -28,3 +28,29 @@ export const Signin = Yup.object({
     .min(8, "Too short")
     .required("please fill up the password"),
 });
+
+export const UserSellsBookValidator = Yup.object({
+  bookName: Yup.string()
+    .max(40, 'Must be less than 40 characters or less')
+    .min(5,'Must be greater than 5 characters')
+    .required('Required'),
+  bookAuthor: Yup.string()
+  .max(40, 'Must be less than 40 characters or less')
+  .min(5,'Must be greater than 5 characters')
+  .required('Required'),
+  price:Yup.number()
+   .required("Required"),
+  previousPrice:Yup.number()
+   .required("Required"),
+  category: Yup.string()
+  .max(40, 'Must be less than 40 characters or less')
+  .min(5,'Must be greater than 5 characters'),
+  bookQuantity:Yup.number()
+  .required('Required'),
+  language: Yup.string()
+  .required('Required'),
+  publisher: Yup.string()
+  .required('Required'),
+  description:Yup.string()
+  .required('Required'),            
+});

@@ -72,6 +72,11 @@ const NavBar = () => {
                   itemname={"Contact"}
                   href="/contact"
                 />
+                <ListItem
+                  className="font-dm text-sm font-regular hover:font-bold my-2.5 lg:my-0"
+                  itemname={"Dashboard"}
+                  href="/dashboard"
+                />
                 {user ? (
                   <button onClick={handleLogOut} className="font-dm text-sm font-regular hover:font-bold my-2.5 lg:my-0">
                     Log Out

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Flex from "../components/layout/Flex";
 import Pagination from "../components/layout/Pagination";
-import Footer from "../components/layout/Footer";
-import LeftSideBar from "../components/layout/leftSideBar";
+import LeftSideBar from "../components/layout/LeftSideBar";
 
 const Book = () => {
   const [showNumber, setShowNumber] = useState(12);

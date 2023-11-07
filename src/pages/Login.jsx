@@ -31,7 +31,6 @@ const Login = () => {
     initialValues: initialValues,
     validationSchema: Signin,
     onSubmit: () => {
-      console.log("done");
       signInUser(formik.values.email, formik.values.password)
             .then(result => {
                 const user = result.user;
@@ -125,7 +124,7 @@ const Login = () => {
             </form>
             <div className="mt-4">
               <p className="font-dm font-blod text-[16px] ">
-                Don't have an account ?{" "}
+                Dont have an account ?{" "}
                 <Link className="text-[#ea6c00]" to="/registration">
                   Sign UP
                 </Link>

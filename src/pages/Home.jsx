@@ -4,7 +4,7 @@ import Addvertise from "../components/layout/Addvertise";
 import Newarrival from "../components/layout/Newarrival";
 import Bestseller from "../components/layout/Bestseller";
 import Offer from "../components/layout/Offer";
-import Footer from "../components/layout/Footer";
+//import Footer from "../components/layout/Footer";
 
 const Home = () => {
   return (

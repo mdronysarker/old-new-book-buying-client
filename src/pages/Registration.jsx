@@ -21,17 +21,12 @@ const Registration = () => {
     fullName: "",
     email: "",
     phone: "",
-    address: "",
-    password: "",
-    confirmPassword: "",
   };
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: Signup,
     onSubmit: () => {
-      //console.log("done");
-      //formik.resetForm();
       console.log(formik.values);
        
         createUser(formik.values.email, formik.values.password)
@@ -41,7 +36,15 @@ const Registration = () => {
                 return updateProfileArea(formik.values.fullName) // Return the promise
             })
             .then(() => {
-                const saveUser = { name: formik.values.fullName, email: formik.values.email };
+                const saveUser = { 
+                  name: formik.values.fullName, 
+                  email: formik.values.email,
+                  fullName: formik.values.fullName,
+                  phone: formik.values.phone,
+                  address: formik.values.address,
+                  userRole:'user',
+                  totalMoney:0,
+                };
                 return fetch('http://localhost:5000/users', {
                     method: 'POST',
                     headers: {
