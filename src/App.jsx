@@ -4,7 +4,6 @@ import {
 } from "react-router-dom";
 import RootLayout from "./Layout/RootLayout";
 import Home from "./pages/Home";
-import Book from "./pages/Book";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
@@ -14,8 +13,14 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import { AddAPhotoOutlined } from "@mui/icons-material";
 import UserSellsBook from "./pages/Dashboard/UserDashboard/UserSellsBook";
 import AdminBookApprove from "./pages/Dashboard/AdminDashboard/AdminBookApprove";
+import AdminSellsBook from "./pages/Dashboard/AdminDashboard/AdminSellsBook";
+import SupplierBookApprove from "./pages/Dashboard/SupplierDashboard/SupplierBookApproved";
+import { BookProvider } from "./context/BookContext";
+import Book from "./pages/Book/Book";
+import EditCategory from "./pages/Dashboard/AdminDashboard/AddCategory/EditCategory";
 
 const routers = createBrowserRouter([
+
   {
     path:'/',
     element:<RootLayout/>,
@@ -34,7 +39,7 @@ const routers = createBrowserRouter([
         element:<Login/>
       },{
         path:"book",
-         element:<Book/>
+         element:<BookProvider><Book/></BookProvider>
       },{
         path:'about',
         element:<About/>
@@ -54,6 +59,15 @@ const routers = createBrowserRouter([
           },{
             path: 'adminBookApproved',
             element: <AdminBookApprove/>,
+          },{
+            path: 'adminSellsBook',
+            element: <AdminSellsBook/>
+          },{
+            path: 'supplierBookApproved',
+            element: <SupplierBookApprove />
+          },{
+            path: 'addCategory',
+            element: <EditCategory/>
           }
         ]
       }

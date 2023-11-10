@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       maxWidth: {
-        container: "1604px",
+        container: "1420px",
       },
       fontFamily: {
         dm: ["DM Sans", "sans-serif"],

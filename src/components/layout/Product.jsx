@@ -7,7 +7,7 @@ import { BiSolidCart } from "react-icons/bi";
 
 const Product = ({ src, badge, title }) => {
   return (
-    <div>
+    <div key={title} className="md:w-[49%] lg:w-[32%]">
       <div className="group relative overflow-y-hidden">
         <Image className="w-[370px] h-[370px]" imgsrc={src} />
         {badge && <Badge title={title} />}

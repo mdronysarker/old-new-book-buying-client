@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Product from "./Product";
+import { BookContext } from "../../context/BookContext";
 
 const items = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
@@ -14,39 +15,38 @@ function Items({ currentItems }) {
   return (
     <>
       {currentItems &&
-        currentItems.map((item, i) => (
-          <div key={i} className="md:w-[49%] lg:w-[32%]">
-            <Product src="images/newp2.png" title={"New"} badge={true} />
-          </div>
-        ))}
+        currentItems.map((item, index) => 
+            <Product key={index} src="images/newp2.png" title={"New"} badge={true} />  
+        )}
     </>
   );
 }
 
 const Pagination = ({ itemsPerPage }) => {
+
+  const {dispatch} = useContext(BookContext);
+
   const [itemOffset, setItemOffset] = useState(0);
-
   const endOffset = itemOffset + itemsPerPage;
-
   const currentItems = items.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(items.length / itemsPerPage);
 
   const handlePageClick = (event) => {
+     dispatch({type:'SET_PAGE',payload:event.selected});
     const newOffset = (event.selected * itemsPerPage) % items.length;
-
     setItemOffset(newOffset);
   };
 
   return (
     <>
-      <div className="md:flex md:flex-wrap md:justify-between">
+      {/* <div className="md:flex md:flex-wrap md:justify-between">
         <Items currentItems={currentItems} />
-      </div>
+      </div> */}
       <ReactPaginate
         breakLabel="..."
         onPageChange={handlePageClick}
         pageRangeDisplayed={4}
-        pageCount={pageCount}
+        pageCount={10}
         previousLabel=""
         renderOnZeroPageCount={null}
         previousClassName="hidden"

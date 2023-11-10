@@ -24,9 +24,7 @@ const MyTextInput = ({ label, ...props }) => {
   );
 };
 
-// And now we can use these
-const UserSellsBook = () => {
-
+const AdminSellsBook = () => {
   const [selectedImages, setSelectedImages] = useState(null);
   const uniqueId = uuidv4();
   const Storage = getStorage(app);
@@ -68,6 +66,7 @@ const UserSellsBook = () => {
             .max(40, 'Must be less than 40 characters or less')
             .min(5,'Must be greater than 5 characters')
             .required('Required'),
+            
           bookAuthor: Yup.string()
           .max(40, 'Must be less than 40 characters or less')
           .min(5,'Must be greater than 5 characters')
@@ -97,7 +96,7 @@ const UserSellsBook = () => {
           ...values,
           userId:userId,
           image:await uploadImages(),
-          bookType:'old',
+          bookType:'new',
         }
         
         axios.post('http://localhost:5000/AddBook',bookInfo)
@@ -196,4 +195,4 @@ const UserSellsBook = () => {
   );
 };
 
-export default UserSellsBook;
+export default AdminSellsBook;

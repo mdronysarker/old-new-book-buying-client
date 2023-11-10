@@ -11,7 +11,7 @@ const useUserInfo = ()=>{
     axios.post('http://localhost:5000/findUserByEmail',{'email':user?.email})
     .then(res=>{
         setUserInfo(res.data[0]);
-        console.log("user info  ",res.data);
+       // console.log("user info  ",res.data);
     })
     .catch(err=>console.log(err));
        }
