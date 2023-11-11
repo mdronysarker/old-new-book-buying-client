@@ -12,7 +12,7 @@ const Cart = () => {
           <div className="w-[23%]">Product</div>
           <div className="w-[23%]">Price</div>
           <div className="w-[23%]">Quantity</div>
-          <div className="w-[23%]">Total</div>
+          <div className="w-[23%]">Total</div>  
         </Flex>
       </div>
       <div className="py-[34px] px-5">

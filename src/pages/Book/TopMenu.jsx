@@ -7,12 +7,14 @@ export default function TopMenu() {
 
     const handleType = (e)=>{ 
        const type = e.target.value;  
+       console.log("set type",e.target.value)
        dispatch({type:'SET_TYPE',payload:type});
     }
 
     const handlePage = (e) =>{
         const page = parseInt(e.target.value);
         dispatch({type:'SET_PER_PAGE',payload:page});
+        console.log("per page  ",e.target.value);
     }
 
   return (
@@ -22,7 +24,7 @@ export default function TopMenu() {
                   Sort By:
                 </span>
                 <select
-                onChange={handlePage}
+                onChange={handleType}
                   id="countries"
                   className=" font-dm font-regular text-base border border-[#F0F0F0] text-gray-900  rounded-lg focus:border-black-500 block md:w-[239px] p-2.5"
                 >
@@ -36,7 +38,7 @@ export default function TopMenu() {
                   Show
                 </span>
                 <select
-                  onChange={handleType}
+                  onChange={handlePage}
                   id="countries"
                   className=" font-dm font-regular text-base border border-[#F0F0F0] text-gray-900  rounded-lg focus:border-black-500 block md:w-[139px] p-2.5"
                 >

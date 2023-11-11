@@ -70,6 +70,9 @@ const routers = createBrowserRouter([
             element: <EditCategory/>
           }
         ]
+      },{
+        path: 'cart',
+        element:<Cart/>
       }
     ]
   }

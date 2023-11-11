@@ -32,7 +32,7 @@ const Pagination = ({ itemsPerPage }) => {
   const pageCount = Math.ceil(items.length / itemsPerPage);
 
   const handlePageClick = (event) => {
-     dispatch({type:'SET_PAGE',payload:event.selected});
+     dispatch({type:'SET_PAGE',payload:++event.selected});
     const newOffset = (event.selected * itemsPerPage) % items.length;
     setItemOffset(newOffset);
   };

@@ -23,7 +23,6 @@ const LeftSideBar = () => {
         dispatch({type:'SET_CATEGORY',payload:category})
     }
 
-
   return (
     <div>
       <h3> Book by Category </h3>
