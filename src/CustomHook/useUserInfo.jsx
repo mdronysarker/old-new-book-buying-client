@@ -8,10 +8,10 @@ const useUserInfo = ()=>{
    //Effect
      useEffect(()=>{ 
        if(user){  
-    axios.post('http://localhost:5000/findUserByEmail',{'email':user?.email})
+          axios.post('http://localhost:5000/findUserByEmail',{'email':user?.email})
     .then(res=>{
-        setUserInfo(res.data[0]);
-       // console.log("user info  ",res.data);
+        setUserInfo(res.data);
+         // console.log("user info  ",res.data);
     })
     .catch(err=>console.log(err));
        }
@@ -24,6 +24,8 @@ const useUserInfo = ()=>{
     const role = userInfo?.role;
     const phone = userInfo?.phone;
     const address = userInfo?.address;
+
+   
     
   return {userId,email,name,photoURL,role,phone,address};
 }

@@ -1,9 +1,60 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import Flex from "../components/layout/Flex";
 import { ImCross } from "react-icons/im";
 import Image from "../components/layout/Image";
+import useUserInfo from "../CustomHook/useUserInfo";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Cart = () => {
+  
+  const [productList,setProductList] = useState([]);
+
+  const totalPrice = productList.reduce((total,item)=>total+item.price*item.quantity,0);
+
+  const { userId } = useUserInfo();
+
+const changeQuantity = (type, index) => {
+  const updatedList = [...productList]; 
+
+  if (type === 'increase' && productList[index].quantity < productList[index].bookQuantity) {
+    updatedList[index].quantity++; 
+  } else if (type === 'increase') {
+    Swal.fire({
+      icon: 'error',
+      title: `Only ${productList[index].bookQuantity} is available`,
+      text: 'You cannot add more than that',
+      timer: 1000
+    });
+    return; 
+  }
+
+  if (type === 'decrease' && productList[index].quantity > 1) {
+    updatedList[index].quantity--; // Decrement the quantity
+  } else if (type === 'decrease') {
+    Swal.fire({
+      icon: 'error',
+      title: 'Zero items are not allowed',
+      text: 'You cannot order zero items',
+      timer: 1000
+    });
+    return; 
+  }
+
+  setProductList(updatedList); 
+};
+
+
+  useEffect(()=>{
+      axios.post('http://localhost:5000/findCartItem',{userId})
+      .then(res=>{
+        const allData = res.data;
+        const newData = allData.map(data=>({...data,'quantity':1}))
+        setProductList(newData);
+      })
+      .catch(err=> console.log(err));
+  },[userId])
+  
   return (
     <div className="max-w-container mx-auto p-2.5">
       <h2 className="mb-10 font-dm text-4xl font-bold">Cart</h2>
@@ -15,29 +66,36 @@ const Cart = () => {
           <div className="w-[23%]">Total</div>  
         </Flex>
       </div>
-      <div className="py-[34px] px-5">
-        <Flex className="flex justify-between items-center">
+      <div className="py-[34px] px-5"> 
+       {
+        productList.map((product,index)=>
+          <Flex key={product._id} className="flex justify-between items-center">
           <div className="w-[23%] relative">
             <Flex className="flex justify-between items-center">
               <ImCross />
               <div className="">
-                <Image className="w-14" imgsrc="images/cart-image.png" />
+                <Image className="w-14" imgsrc={product.image} />
               </div>
               <h3 className="font-dm font-bold text-sm text-primary">
-                Novel Book
+                {product.bookName}
               </h3>
             </Flex>
           </div>
-          <div className="w-[23%]">$12</div>
+          <div className="w-[23%]">{product.price}</div>
           <div className="w-[23%] ">
             <span className=" font-dm text-[16px] border border-[#767676] py-[3px] px-[21px]">
-              - <span className="mx-[10px]"> 1</span> +
+              <button onClick={()=>{changeQuantity('decrease',index)}}>-</button>
+              <span className="mx-[10px]"> {product.quantity}</span> 
+              <button onClick={()=>{changeQuantity('increase',index)}}>+</button>
             </span>
           </div>
           <div className="w-[23%] font-dm text-[#262626] font-bold text-2xl ">
-            $12
+            {product.price*product.quantity}
           </div>
         </Flex>
+        )
+       }
+        
       </div>
 
       <div>
@@ -47,11 +105,11 @@ const Cart = () => {
       </div>
       <div className="mt-8 ">
         <Flex className="flex justify-end gap-x-8 ">
-          <h4>Subtotal</h4>
-          <p>32$</p>
+          <h4>Total Price </h4>
+          <p>${totalPrice}</p>
         </Flex>
         <Flex className="flex justify-end gap-x-8 mt-3 ">
-          <h4>Total</h4>
+          <h4>Service Charge </h4>
           <p>32$</p>
         </Flex>
       </div>

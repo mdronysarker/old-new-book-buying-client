@@ -1,27 +1,61 @@
-import React from "react";
 import Image from "./Image";
 import Badge from "./Badge";
 import Flex from "./Flex";
 import { AiFillHeart } from "react-icons/ai";
 import { BiSolidCart } from "react-icons/bi";
+import useUserInfo from '../../CustomHook/useUserInfo';
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Product = ({ item}) => {
+
+  const { userId } = useUserInfo();
+
+  const addToCart = ()=>{
+      const data = {
+        userId:userId,
+        productId: item._id,
+      }
+      axios.post('http://localhost:5000/addToCart',data)
+      .then(res=>{
+        if(res.data.status){
+          Swal.fire({
+              icon:'success',
+              title:'Add to Cart',
+              text:'Book Added to Cart, Now you can order from cart',
+              timer:700
+          })
+        } else {
+        Swal.fire({
+              icon:'error',
+              title:'Product not added to cart',
+              text:'Somthing Wrong happend here',
+              timer:700
+          })
+        }
+      })
+      .catch(err=>console.log(err));
+
+
+  }
+
+
   return (
     <div key={item.bookName} className="md:w-[49%] lg:w-[32%] mb-6">
       <div className="group relative overflow-y-hidden">
-        <Image className="w-[370px] h-[370px]" imgsrc={item.image} />
+        <Image className="w-[370px] h-[370px]" imgsrc={item.image} /> 
         
         {item.bookType && <Badge title={item.bookType} />}
         <div className="h-40 bg-white absolute bottom-[-44%] group-hover:bottom-0 left-0 w-full py-6 px-7 ">
           <Flex className="flex justify-end items-center gap-x-1 sm:gap-x-4">
-            <p className="font-regular font-dm text-base text-[#6d6d6d]">
-              Add to Wish List</p>
+            <button className="font-regular font-dm text-base text-[#6d6d6d]">
+              Add to Wish List</button>
             <AiFillHeart className="text-base" />
           </Flex>
           <Flex className="flex justify-end items-center gap-x-1 sm:gap-x-4 mt-5">
-            <p className="font-regular font-dm text-base text-[#6d6d6d]">
+            <button  onClick={addToCart} className="font-regular font-dm text-base text-[#6d6d6d]">
               Add to Cart
-            </p>
+            </button>
             <BiSolidCart className="text-base" />
           </Flex>
         </div>
