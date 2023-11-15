@@ -21,6 +21,7 @@ const Registration = () => {
     fullName: "",
     email: "",
     phone: "",
+    role:"user"
   };
 
   const formik = useFormik({
@@ -42,7 +43,7 @@ const Registration = () => {
                   fullName: formik.values.fullName,
                   phone: formik.values.phone,
                   address: formik.values.address,
-                  userRole:'user',
+                  userRole:formik.values.role,
                   totalMoney:0,
                 };
                 return fetch('http://localhost:5000/users', {
@@ -153,7 +154,19 @@ const Registration = () => {
               ) : (
                 ""
               )}
+              <select
+                onChange={formik.handleChange}
+                value={formik.values.role}
+                name="role"
+                className="w-full bg-transparent focus:outline-none resize-none border-b border-solid border-[#F0F0F0] pb-2.5 outline-0 mb-6"
+              >
+                <option value="">Select Role</option>
+                <option value="user">USER</option>
+                <option value="donor">DONOR</option>
+                <option value="supplier">SUPPLIER</option>
+              </select>
               <div className="relative">
+
                 <h4 className="placeholder:font-regular mb-2.5 font-dm text-base font-bold placeholder:font-dm placeholder:text-sm placeholder:text-[#767676]">
                   Password
                 </h4>
