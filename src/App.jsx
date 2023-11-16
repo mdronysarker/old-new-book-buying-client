@@ -18,6 +18,8 @@ import SupplierBookApprove from "./pages/Dashboard/SupplierDashboard/SupplierBoo
 import { BookProvider } from "./context/BookContext";
 import Book from "./pages/Book/Book";
 import EditCategory from "./pages/Dashboard/AdminDashboard/AddCategory/EditCategory";
+import NewBook from "./pages/Dashboard/AdminDashboard/NewBook";
+import OldBook from "./pages/Dashboard/AdminDashboard/OldBook";
 
 const routers = createBrowserRouter([
 
@@ -68,6 +70,12 @@ const routers = createBrowserRouter([
           },{
             path: 'addCategory',
             element: <EditCategory/>
+          },{
+            path: 'newBook',
+            element: <NewBook/>
+          },{
+            path: 'oldBook',
+            element: <OldBook/>
           }
         ]
       },{

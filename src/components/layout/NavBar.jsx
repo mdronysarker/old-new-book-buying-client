@@ -117,7 +117,8 @@ const NavBar = () => {
                       </div>
                       {userDropDownShow && (
                         <List className="absolute mt-6 right-20 w-[200px] bg-white text-primary text-center font-regular font-dm text-sm border border-solid border-[#f0f0f0] z-50">
-                          <ListItem
+                          <ListItem 
+                            href='/dashboard'
                             className="py-4 px-5  border-b border-solid border-[#f0f0f0] hover:bg-primary hover:text-white duration-100 ease-in  "
                             itemname="My Account"
                           ></ListItem>
