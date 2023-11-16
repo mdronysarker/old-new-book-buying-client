@@ -9,18 +9,18 @@ const About = () => {
       <div className="max-w-container mx-auto p-2.5">
         <Flex className="flex">
           <div className="w-2/4">
-            <Image className="w-[580px] h-[576px]" imgsrc="images/newp2.png" />
+            <Image className="w-[380px] h-[376px]" imgsrc="images/newp2.png" />
           </div>
           <div className="w-2/4">
-            <Image className="w-[580px] h-[576px]" imgsrc="images/newp1.png" />
+            <Image className="w-[380px] h-[376px]" imgsrc="images/newp1.png" />
           </div>
         </Flex>
-        <div className="mt-[32px]">
+        <div className="mt-[20px]">
           <h4 className="font-regular font-dm text-[39px]">
             Orebi is one of the world’s leading Old Book Shop.
           </h4>
         </div>
-        <Flex className="flex justify-between mt-[128px]">
+        <Flex className="flex justify-between mt-[30px]">
           <div className="w-[32%]">
             <h4 className="text-2xl  font-dm font-bold">Our Vision</h4>
             <p className="text-base  font-dm font-regular text[#767676]">
