@@ -1,5 +1,5 @@
 import React from "react";
-import Product from "./Product";
+import Product from "../products/Product";
 import Heading from "./Heading";
 import Flex from "./Flex";
 

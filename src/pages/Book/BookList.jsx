@@ -1,7 +1,7 @@
 import  { useContext, useEffect, useState } from 'react'
 import { BookContext } from '../../context/BookContext'
 import axios from 'axios';
-import Product from '../../components/layout/Product';
+import Product from '../../components/products/Product';
 
 export default function BookList() {
 

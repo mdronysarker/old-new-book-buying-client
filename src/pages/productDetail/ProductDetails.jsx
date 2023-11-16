@@ -1,12 +1,23 @@
 import { CiFacebook } from "react-icons/ci";
 import { FiTwitter } from "react-icons/fi";
 import { CiLinkedin } from "react-icons/ci";
-import React from "react";
 import List from "../../components/layout/List";
-import LeftSideBar from "../Book/LeftSideBar";
 import RelatedProducts from "./RelatedProducts";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const ProductDetails = () => {
+
+  const {productId} = useParams();
+  const [book,setBook] = useState({});
+
+  useEffect(()=>{
+    axios.post('http://localhost:5000/getProductDetails',productId)
+    .then(res=>setBook(res.data))
+    .catch(err=> console.log(err))
+  },[productId])        
+
   return (
     <div className="max-w-container mx-auto p-2.5 ">
       <div className="flex gap-8">
@@ -15,20 +26,14 @@ const ProductDetails = () => {
         </div>
         <div className="w-[33%]">
           <h1 className="text-[#333] text-[22px] font-bold">
-            Chaz Kangeroo Hoodie
+            {book.bookName}
           </h1>
           <span className="font-dm text-[#333] text-[24px] font-bold mt-6 ">
-            $52.00
+            {book.price}
           </span>
           <div className="border-t border-solid border-[#2d2d2d] mt-[8px]">
             <p className="font-dm mb-[10px] mt-5 text-[#333]">
-              Ideal for cold-weather training or work outdoors, the Chaz Hoodie
-              promises superior warmth with every wear. Thick material blocks
-              out the wind as ribbed cuffs and bottom band seal in body heat.
-            </p>
-            <p className="font-dm mb-[10px] text-[#333]">
-              Ideal for cold-weather training or work outdoors, the Chaz Hoodie
-              promises superior warmth with every wear.
+             {book.description}
             </p>
           </div>
           <div className="flex items-center gap-5">
@@ -46,7 +51,7 @@ const ProductDetails = () => {
           </div>
           <div>
             <p className="font-dm font-bold text-[14px] mt-8">
-              Categories: <span className="ml-3">Adventure</span>
+              Categories: <span className="ml-3">{book.categegory}</span>
             </p>
           </div>
           <div className="mt-5">
@@ -66,25 +71,14 @@ const ProductDetails = () => {
             </List>
           </div>
         </div>
-        <div className="w-[30%] bg-zinc-200"></div>
+        <div className="w-[30%] bg-zinc-200">
+          {/* <LeftSideBar/> */}
+        </div>
       </div>
       <div className="w-[63%] mt-10">
         <h6 className="font-dm text-[14px] font-semibold">DETAILS</h6>
         <div className="mt-5  border-t border-solid border-[#000]">
-          <p className="mt-5">
-            Ideal for cold-weather training or work outdoors, the Chaz Hoodie
-            promises superior warmth with every wear. Thick material blocks out
-            the wind as ribbed cuffs and bottom band seal in body heat.Ideal for
-            cold-weather training or work outdoors, the Chaz Hoodie promises
-            superior warmth with every wear. Thick material blocks out the wind
-            as ribbed cuffs and bottom band seal in body heat.Ideal for
-            cold-weather training or work outdoors, the Chaz Hoodie promises
-            superior warmth with every wear. Thick material blocks out the wind
-            as ribbed cuffs and bottom band seal in body heat.Ideal for
-            cold-weather training or work outdoors, the Chaz Hoodie promises
-            superior warmth with every wear. Thick material blocks out the wind
-            as ribbed cuffs and bottom band seal in body heat.
-          </p>
+          <p className="mt-5"> {book.description} </p>
         </div>
       </div>
       <RelatedProducts />

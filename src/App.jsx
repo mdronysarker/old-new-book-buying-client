@@ -48,6 +48,12 @@ const routers = createBrowserRouter([
             <Book />
           </BookProvider>
         ),
+        // children: [
+        //   {
+        //     path:"singleProduct/:productId",
+        //     element: <ProductDetails/>
+        //   }
+        // ]
       },
       {
         path: "about",
@@ -58,7 +64,7 @@ const routers = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "innerPage",
+        path: `book/singleProduct/:productId`,
         element: <ProductDetails />,
       },
       {
@@ -106,7 +112,7 @@ const routers = createBrowserRouter([
       },{
         path: 'cart',
         element:<Cart/>
-      }
+      },
     ]
   }
 ])

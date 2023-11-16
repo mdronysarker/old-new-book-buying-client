@@ -8,7 +8,7 @@ const LeftSideBar = () => {
   const [allCategory, setAllCategory] = useState([]);
   const { dispatch } = useContext(BookContext);
 
-  useEffect(() => {
+  useEffect(() => {  
     axios
       .get("http://localhost:5000/getAllCategory")
       .then((res) => {

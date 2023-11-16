@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import Product from "./Product";
+import Product from "../products/Product";
 import { BookContext } from "../../context/BookContext";
 
 const items = [
