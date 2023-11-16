@@ -16,6 +16,9 @@ import { BookProvider } from "./context/BookContext";
 import Book from "./pages/Book/Book";
 import EditCategory from "./pages/Dashboard/AdminDashboard/AddCategory/EditCategory";
 import ProductDetails from "./pages/productDetail/ProductDetails";
+import NewBook from "./pages/Dashboard/AdminDashboard/NewBook";
+import OldBook from "./pages/Dashboard/AdminDashboard/OldBook";
+
 
 const routers = createBrowserRouter([
   {
@@ -75,26 +78,38 @@ const routers = createBrowserRouter([
             element: <AdminBookApprove />,
           },
           {
-            path: "adminSellsBook",
-            element: <AdminSellsBook />,
-          },
-          {
-            path: "supplierBookApproved",
-            element: <SupplierBookApprove />,
-          },
-          {
-            path: "addCategory",
-            element: <EditCategory />,
-          },
-        ],
-      },
-      {
-        path: "cart",
-        element: <Cart />,
-      },
-    ],
-  },
-]);
+            path:'addBooks',
+            element:<AddAPhotoOutlined/>
+          },{
+            path: 'userSellsBook',
+            element: <UserSellsBook/>,
+          },{
+            path: 'adminBookApproved',
+            element: <AdminBookApprove/>,
+          },{
+            path: 'adminSellsBook',
+            element: <AdminSellsBook/>
+          },{
+            path: 'supplierBookApproved',
+            element: <SupplierBookApprove />
+          },{
+            path: 'addCategory',
+            element: <EditCategory/>
+          },{
+            path: 'newBook',
+            element: <NewBook/>
+          },{
+            path: 'oldBook',
+            element: <OldBook/>
+          }
+        ]
+      },{
+        path: 'cart',
+        element:<Cart/>
+      }
+    ]
+  }
+])
 
 function App() {
   return <RouterProvider router={routers} />;

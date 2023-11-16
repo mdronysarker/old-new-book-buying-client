@@ -22,6 +22,8 @@ return (
                 <li><Link to='/dashboard/adminBookApproved'>Admin Book Approved</Link></li>
                 <li><Link to='/dashboard/supplierBookApproved'>Supplier Book Approved </Link></li>
                 <li><Link to='/dashboard/addCategory'> Admin Add Category </Link></li>
+                <li><Link  to='/dashboard/oldBook' >Old Books</Link></li>
+                <li><Link  to='/dashboard/newBook' >New Books</Link></li>
             </ul>
         </div>
     </div>
