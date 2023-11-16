@@ -1,7 +1,4 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./Layout/RootLayout";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -9,7 +6,7 @@ import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
-import Dashboard from './pages/Dashboard/Dashboard'
+import Dashboard from "./pages/Dashboard/Dashboard";
 import { AddAPhotoOutlined } from "@mui/icons-material";
 import UserSellsBook from "./pages/Dashboard/UserDashboard/UserSellsBook";
 import AdminBookApprove from "./pages/Dashboard/AdminDashboard/AdminBookApprove";
@@ -18,40 +15,68 @@ import SupplierBookApprove from "./pages/Dashboard/SupplierDashboard/SupplierBoo
 import { BookProvider } from "./context/BookContext";
 import Book from "./pages/Book/Book";
 import EditCategory from "./pages/Dashboard/AdminDashboard/AddCategory/EditCategory";
+import ProductDetails from "./pages/productDetail/ProductDetails";
 import NewBook from "./pages/Dashboard/AdminDashboard/NewBook";
 import OldBook from "./pages/Dashboard/AdminDashboard/OldBook";
 
-const routers = createBrowserRouter([
 
+const routers = createBrowserRouter([
   {
-    path:'/',
-    element:<RootLayout/>,
-    children:[
+    path: "/",
+    element: <RootLayout />,
+    children: [
       {
-        path:"/",
-        element:<Home></Home>
-      },{
-        path:"card",
-        element:<Cart/>
-      },{
-        path:"registration",
-        element:<Registration/>
-      },{
-        path:"login",
-        element:<Login/>
-      },{
-        path:"book",
-         element:<BookProvider><Book/></BookProvider>
-      },{
-        path:'about',
-        element:<About/>
-      },{
-        path:'contact',
-        element:<Contact/>
-      },{
-        path:"dashboard",
-        element:<Dashboard/>,
-        children:[
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "card",
+        element: <Cart />,
+      },
+      {
+        path: "registration",
+        element: <Registration />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "book",
+        element: (
+          <BookProvider>
+            <Book />
+          </BookProvider>
+        ),
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+      {
+        path: "innerPage",
+        element: <ProductDetails />,
+      },
+      {
+        path: "dashboard",
+        element: <Dashboard />,
+        children: [
+          {
+            path: "addBooks",
+            element: <AddAPhotoOutlined />,
+          },
+          {
+            path: "userSellsBook",
+            element: <UserSellsBook />,
+          },
+          {
+            path: "adminBookApproved",
+            element: <AdminBookApprove />,
+          },
           {
             path:'addBooks',
             element:<AddAPhotoOutlined/>

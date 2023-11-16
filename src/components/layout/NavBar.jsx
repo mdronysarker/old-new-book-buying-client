@@ -108,6 +108,11 @@ const NavBar = () => {
                   itemname={"Contact"}
                   href="/contact"
                 />
+                <ListItem
+                  className="font-dm text-sm font-regular hover:font-bold my-2.5 lg:my-0"
+                  itemname={"Inner page"}
+                  href="/innerPage"
+                />
                 <div className="flex items-center">
                   <Flex className="flex gap-x-10">
                     <Dropdown className=" z-50 relative" dropref={userref}>
