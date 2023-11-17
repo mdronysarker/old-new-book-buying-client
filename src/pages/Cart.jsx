@@ -79,11 +79,11 @@ const Cart = () => {
           <Flex key={product._id} className="flex justify-between items-center">
             <div className="w-[23%] relative">
               <Flex className="flex justify-between items-center">
-                <ImCross />
-                <div className="">
+                <ImCross className="w-[100%]" />
+                <div className="w-[100%] mb-6">
                   <Image className="w-14" imgsrc={product.image} />
                 </div>
-                <h3 className="font-dm font-bold text-sm text-primary">
+                <h3 className="font-dm font-bold text-sm text-primary w-[100%]">
                   {product.bookName}
                 </h3>
               </Flex>
