@@ -48,12 +48,6 @@ const routers = createBrowserRouter([
             <Book />
           </BookProvider>
         ),
-        // children: [
-        //   {
-        //     path:"singleProduct/:productId",
-        //     element: <ProductDetails/>
-        //   }
-        // ]
       },
       {
         path: "about",
@@ -65,7 +59,7 @@ const routers = createBrowserRouter([
       },
       {
         path: `book/singleProduct/:productId`,
-        element: <ProductDetails />,
+        element: <BookProvider><ProductDetails />,</BookProvider>
       },
       {
         path: "dashboard",

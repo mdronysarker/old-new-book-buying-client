@@ -50,6 +50,37 @@ const Cart = () => {
     setProductList(updatedList);
   };
 
+  const deleteProduct = (productId)=>{
+    axios.post('http://localhost:5000/deleteCartItem',{productId})
+    .then(res=>{
+      if(res.data.status){
+        Swal.fire({
+        icon: "success",
+        title: "Item Delete ",
+        text: "Your item is deleted from the cart",
+        timer: 1000,
+      });
+        let newArray = productList.filter(item=>item._id!==productId);
+        setProductList(newArray)
+      }
+    })
+    .catch(err=>console.log(err))
+  }
+  console.log("product list ",productList)
+  const completeOrder = ()=>{
+    axios.post('http://localhost:5000/addCompleteOrder',{productList,userId})
+    .then(res=>{
+      if(res.data.status){
+         Swal.fire({
+          icon:"success",
+          title: "Order Submitted Successfuly",
+          text:'Your order will be move in 3 days'
+         })
+      }
+    })
+    .catch(err=>console.log(err))
+  }
+
   useEffect(() => {
     axios
       .post("http://localhost:5000/findCartItem", { userId })
@@ -79,7 +110,7 @@ const Cart = () => {
           <Flex key={product._id} className="flex justify-between items-center">
             <div className="w-[23%] relative">
               <Flex className="flex justify-between items-center">
-                <ImCross />
+                <ImCross className="cursor-pointer font-xl" onClick={()=>{deleteProduct(product._id,)}} />
                 <div className="">
                   <Image className="w-14" imgsrc={product.image} />
                 </div>
@@ -114,7 +145,7 @@ const Cart = () => {
           </Flex>
         ))}
       </div>
-
+   {productList.length>0 && <>
       <div>
         <h3 className="flex justify-end font-dm font-bold text-xl">
           Cart Totals
@@ -131,10 +162,11 @@ const Cart = () => {
         </Flex>
       </div>
       <div className="flex justify-end mt-4">
-        <button className="bg-primary py-4 px-24 font-dm text-sm font-bold text-white">
+        <button onClick={completeOrder} className="bg-primary py-4 px-24 font-dm text-sm font-bold text-white">
           Order
         </button>
       </div>
+      </>}
     </div>
   );
 };
