@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import useUserInfo from '../../../CustomHook/useUserInfo';
@@ -28,9 +28,22 @@ const MyTextInput = ({ label, ...props }) => {
 const UserSellsBook = () => {
 
   const [selectedImages, setSelectedImages] = useState(null);
+  const [selectCategory,setSelectCategory] = useState('');
+  const [allCategory,setAllCategory] = useState([]);
   const uniqueId = uuidv4();
   const Storage = getStorage(app);
   const {userId} = useUserInfo();
+
+   useEffect(() => {  
+    axios
+      .get("http://localhost:5000/getAllCategory")
+      .then((res) => {
+        setAllCategory(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userId]);
          
       const uploadImages = async () => {
        if(selectedImages){
@@ -46,6 +59,10 @@ const UserSellsBook = () => {
        }      
      };
 
+     const handleCategory = (e)=>{
+       setSelectCategory(e.target.value);
+     }
+
   return (
     <div className='md:-mx-24 md:-my-6  -px-12 md:-py-14'> 
     <div className='shadow-md md:mx-24 md:my-10 bg-base-200 px-12 md:py-14'> 
@@ -55,9 +72,7 @@ const UserSellsBook = () => {
           bookName: '',
           bookAuthor: '',
           price:'',
-          previousPrice:'',
           bookQuantity: '',
-          category: '',
           language: '',
           publisher: '',
           description: '',
@@ -74,11 +89,6 @@ const UserSellsBook = () => {
           .required('Required'),
           price:Yup.number()
            .required("Required"),
-          previousPrice:Yup.number()
-           .required("Required"),
-          category: Yup.string()
-          .max(40, 'Must be less than 40 characters or less')
-          .min(5,'Must be greater than 5 characters'),
           bookQuantity:Yup.number()
           .required('Required'),
           language: Yup.string()
@@ -98,6 +108,8 @@ const UserSellsBook = () => {
           userId:userId,
           image:await uploadImages(),
           bookType:'old',
+          date: new Date(),
+          category:selectCategory
         }
         
         axios.post('http://localhost:5000/AddBook',bookInfo)
@@ -139,20 +151,21 @@ const UserSellsBook = () => {
             placeholder="$120"
           />
           </div>
-          <div className="flex flex-col lg:flex-row justify-center lg:mt-5">
-            <MyTextInput
+          <div className="flex flex-col lg:flex-row justify-start lg:mt-5">
+            {/* <MyTextInput
             label="Previous Price"
             name="previousPrice"
             type="number"
             placeholder="$140"
-          />
+          /> */}
 
-          <MyTextInput
-            label="Category"
-            name="category"
-            type="text"
-            placeholder="Fiction"
-          />
+          <div className="flex flex-col">
+      <label className='text-md text-poppins text-md ms-1' htmlFor='category'>Select Category</label>
+      <select className="text-input border rounded-sm border-gray-600 ps-4 mt-3 h-10 w-[300px] lg:me-3" onChange={handleCategory}  >
+        {allCategory.map(item=><option key={item.category} value={item.category}>{item.category}</option> ) }
+      </select>
+    </div>
+    
 
           <div className='flex flex-col md:ms-4'>
                 <label className='text-md text-poppins text-md ms-1' >Select Image</label>

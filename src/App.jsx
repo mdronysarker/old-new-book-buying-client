@@ -18,6 +18,8 @@ import EditCategory from "./pages/Dashboard/AdminDashboard/AddCategory/EditCateg
 import ProductDetails from "./pages/productDetail/ProductDetails";
 import NewBook from "./pages/Dashboard/AdminDashboard/NewBook";
 import OldBook from "./pages/Dashboard/AdminDashboard/OldBook";
+import PrevousOrder from "./pages/Dashboard/UserDashboard/PrevousOrder";
+import ProfilePage from "./pages/Dashboard/UserDashboard/ProfilePage";
 
 
 const routers = createBrowserRouter([
@@ -101,6 +103,12 @@ const routers = createBrowserRouter([
           },{
             path: 'oldBook',
             element: <OldBook/>
+          },{
+            path: 'prevousOrder',
+            element: <PrevousOrder/>
+          },{
+            path: 'profilePage',
+            element:<ProfilePage/>
           }
         ]
       },{

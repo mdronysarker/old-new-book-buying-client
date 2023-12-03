@@ -66,6 +66,7 @@ const Cart = () => {
     })
     .catch(err=>console.log(err))
   }
+  
   console.log("product list ",productList)
   const completeOrder = ()=>{
     axios.post('http://localhost:5000/addCompleteOrder',{productList,userId})
@@ -128,7 +129,7 @@ const Cart = () => {
                   onClick={() => {
                     changeQuantity("decrease", index);
                   }}
-                >
+                > 
                   -
                 </button>
                 <span className="mx-[10px]"> {product.quantity}</span>

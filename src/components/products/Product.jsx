@@ -17,8 +17,10 @@ const Product = ({ item}) => {
         userId:userId,
         productId: item._id,
       }
+     // console.log("data => ",data)
       axios.post('http://localhost:5000/addToCart',data)
       .then(res=>{
+       // console.log("user data => ",res.data)
         if(res.data.status){
           Swal.fire({
               icon:'success',
@@ -26,7 +28,15 @@ const Product = ({ item}) => {
               text:'Book Added to Cart, Now you can order from cart',
               timer:700
           })
-        } else {
+        }else if(res.data.status===false){
+          Swal.fire({
+              icon:'warning',
+              title:'Aleady in Cart',
+              text:'This book is already in the cart. Add another book',
+              timer:700
+          })
+        }
+        else {
         Swal.fire({
               icon:'error',
               title:'Product not added to cart',

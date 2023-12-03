@@ -40,7 +40,6 @@ const Registration = () => {
                 const saveUser = { 
                   name: formik.values.fullName, 
                   email: formik.values.email,
-                  fullName: formik.values.fullName,
                   phone: formik.values.phone,
                   address: formik.values.address,
                   userRole:formik.values.role,
