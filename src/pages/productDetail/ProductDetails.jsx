@@ -1,34 +1,96 @@
 import { CiFacebook } from "react-icons/ci";
 import { FiTwitter } from "react-icons/fi";
 import { CiLinkedin } from "react-icons/ci";
-import React from "react";
 import List from "../../components/layout/List";
-import LeftSideBar from "../Book/LeftSideBar";
 import RelatedProducts from "./RelatedProducts";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import LeftSideBar from "../Book/LeftSideBar";
+import useUserInfo from "../../CustomHook/useUserInfo";
+import Swal from "sweetalert2";
 
 const ProductDetails = () => {
+
+  const {productId} = useParams();
+  const [book,setBook] = useState({});
+  const [quantity,setQuantity] = useState(1);
+
+  useEffect(()=>{
+    axios.post('http://localhost:5000/getProductDetails',{productId})
+    .then(res=>{setBook(res.data)})
+    .catch(err=> console.log(err))
+  },[productId]);
+
+    const { userId } = useUserInfo();
+
+  const addToCart = ()=>{
+      const data = {
+        userId:userId,
+        productId: productId,
+        quantity:quantity
+      }
+      axios.post('http://localhost:5000/addToCart',data)
+      .then(res=>{
+        if(res.data.status){
+          Swal.fire({
+              icon:'success',
+              title:'Add to Cart',
+              text:'Book Added to Cart, Now you can order from cart',
+              timer:700
+          })
+        } else {
+        Swal.fire({
+              icon:'error',
+              title:'Product not added to cart',
+              text:'Somthing Wrong happend here',
+              timer:700
+          })
+        }
+      })
+      .catch(err=>console.log(err));
+  }
+
+  const quantityChange = (item) => {
+    console.log('item ',item);
+    console.log('quantity ',quantity)
+     if(item>quantity){
+      if(quantity===book.bookQuantity){
+        Swal.fire({
+              icon:'error',
+              title:`only ${book.bookQuantity} is availble `,
+              text:'You can not add more',
+              timer:700
+          })
+      } else setQuantity((quantity)=>(quantity+1)) 
+     } else if(item<quantity){
+      if(quantity===1){
+        Swal.fire({
+              icon:'error',
+              title:`Zero item not allowed`,
+              text:'Zero item can not buy',
+              timer:700
+          })
+      } else setQuantity((quantity)=>(quantity-1)) 
+     }
+  }
+
   return (
     <div className="max-w-container mx-auto p-2.5 ">
       <div className="flex gap-8">
-        <div className="w-[30%] bg-slate-400">
-          <img src="./images/newp2.png" alt="" />
+        <div className="w-[30%] ">
+          <img src={book.image} alt="" />
         </div>
         <div className="w-[33%]">
           <h1 className="text-[#333] text-[22px] font-bold">
-            Chaz Kangeroo Hoodie
+            {book.bookName}
           </h1>
           <span className="font-dm text-[#333] text-[24px] font-bold mt-6 ">
-            $52.00
+            {book.price}
           </span>
           <div className="border-t border-solid border-[#2d2d2d] mt-[8px]">
             <p className="font-dm mb-[10px] mt-5 text-[#333]">
-              Ideal for cold-weather training or work outdoors, the Chaz Hoodie
-              promises superior warmth with every wear. Thick material blocks
-              out the wind as ribbed cuffs and bottom band seal in body heat.
-            </p>
-            <p className="font-dm mb-[10px] text-[#333]">
-              Ideal for cold-weather training or work outdoors, the Chaz Hoodie
-              promises superior warmth with every wear.
+             {book.description}
             </p>
           </div>
           <div className="flex items-center gap-5">
@@ -38,15 +100,17 @@ const ProductDetails = () => {
             <input
               className="border border-solid border-[#ebebeb] text-center p-3 w-[100px]"
               type="number"
+              onChange={(e)=>{quantityChange(e.target.value)}}
               placeholder="1"
+              value={quantity}
             />
-            <button className="bg-[#ce7852] text-[#fff] px-[25px] py-2 hover:border hover:border-solid hover:border-black hover:bg-white hover:text-black  transition ease-in-out delay-100">
+            <button onClick={addToCart} className="bg-[#ce7852] text-[#fff] px-[25px] py-2 hover:border hover:border-solid hover:border-black hover:bg-white hover:text-black  transition ease-in-out delay-100">
               ADD TO CART
             </button>
           </div>
           <div>
             <p className="font-dm font-bold text-[14px] mt-8">
-              Categories: <span className="ml-3">Adventure</span>
+              Categories: <span className="ml-3">{book.category}</span>
             </p>
           </div>
           <div className="mt-5">
@@ -66,28 +130,17 @@ const ProductDetails = () => {
             </List>
           </div>
         </div>
-        <div className="w-[30%] bg-zinc-200"></div>
+        <div className="w-[30%] ">
+          <LeftSideBar/>
+        </div>
       </div>
       <div className="w-[63%] mt-10">
         <h6 className="font-dm text-[14px] font-semibold">DETAILS</h6>
         <div className="mt-5  border-t border-solid border-[#000]">
-          <p className="mt-5">
-            Ideal for cold-weather training or work outdoors, the Chaz Hoodie
-            promises superior warmth with every wear. Thick material blocks out
-            the wind as ribbed cuffs and bottom band seal in body heat.Ideal for
-            cold-weather training or work outdoors, the Chaz Hoodie promises
-            superior warmth with every wear. Thick material blocks out the wind
-            as ribbed cuffs and bottom band seal in body heat.Ideal for
-            cold-weather training or work outdoors, the Chaz Hoodie promises
-            superior warmth with every wear. Thick material blocks out the wind
-            as ribbed cuffs and bottom band seal in body heat.Ideal for
-            cold-weather training or work outdoors, the Chaz Hoodie promises
-            superior warmth with every wear. Thick material blocks out the wind
-            as ribbed cuffs and bottom band seal in body heat.
-          </p>
+          <p className="mt-5"> {book.description} </p>
         </div>
       </div>
-      <RelatedProducts />
+      <RelatedProducts category={book.category} />
     </div>
   );
 };

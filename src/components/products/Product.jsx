@@ -1,11 +1,12 @@
-import Image from "./Image";
-import Badge from "./Badge";
-import Flex from "./Flex";
+import Image from "../layout/Image";
+import Badge from "../layout/Badge";
+import Flex from "../layout/Flex";
 import { AiFillHeart } from "react-icons/ai";
 import { BiSolidCart } from "react-icons/bi";
 import useUserInfo from '../../CustomHook/useUserInfo';
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Product = ({ item}) => {
 
@@ -35,8 +36,6 @@ const Product = ({ item}) => {
         }
       })
       .catch(err=>console.log(err));
-
-
   }
 
 
@@ -62,7 +61,7 @@ const Product = ({ item}) => {
       </div>
       <div className="mb-12 md:mb-0">
         <Flex className="flex justify-between mt-0 md:mt-6">
-          <h3 className="font-dm text-xl font-bold">{item?.bookName}</h3>
+          <Link to={`/book/singleProduct/${item?._id}`} className="font-dm text-xl font-bold">{item?.bookName}</Link>
           <p className="font-dm text-base font-regular text-[#767676]">${item?.price}</p>
         </Flex>
         <p className="font-dm text-base font-regular text-[#767676] mt-1 md:mt-4">

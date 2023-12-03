@@ -1,7 +1,7 @@
 import React from "react";
 import Heading from "./Heading";
 import Flex from "./Flex";
-import Product from "./Product";
+import Product from "../products/Product";
 
 const Newarrival = () => {
   return (

@@ -58,8 +58,8 @@ const routers = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "innerPage",
-        element: <ProductDetails />,
+        path: `book/singleProduct/:productId`,
+        element: <BookProvider><ProductDetails />,</BookProvider>
       },
       {
         path: "dashboard",
@@ -106,7 +106,7 @@ const routers = createBrowserRouter([
       },{
         path: 'cart',
         element:<Cart/>
-      }
+      },
     ]
   }
 ])
