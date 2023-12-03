@@ -110,11 +110,13 @@ const Cart = () => {
           <Flex key={product._id} className="flex justify-between items-center">
             <div className="w-[23%] relative">
               <Flex className="flex justify-between items-center">
-                <ImCross className="cursor-pointer font-xl" onClick={()=>{deleteProduct(product._id,)}} />
-                <div className="">
+
+                <ImCross className="cursor-pointer font-xl w-[100%]" onClick={()=>{deleteProduct(product._id,)}} />
+                <div className="w-[100%] mb-6">
+
                   <Image className="w-14" imgsrc={product.image} />
                 </div>
-                <h3 className="font-dm font-bold text-sm text-primary">
+                <h3 className="font-dm font-bold text-sm text-primary w-[100%]">
                   {product.bookName}
                 </h3>
               </Flex>
