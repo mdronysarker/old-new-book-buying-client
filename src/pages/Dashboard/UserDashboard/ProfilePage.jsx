@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import useUserInfo from '../../../CustomHook/useUserInfo'
 import axios from 'axios';
 
-export default function ProfilePage() {
+export default function ProfilePage() {   
 
     const {userId} = useUserInfo();
     const [userInfo,setUserInfo] = useState({});
