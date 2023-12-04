@@ -66,8 +66,6 @@ const Cart = () => {
     })
     .catch(err=>console.log(err))
   }
-  
-  console.log("product list ",productList)
   const completeOrder = ()=>{
     axios.post('http://localhost:5000/addCompleteOrder',{productList,userId})
     .then(res=>{

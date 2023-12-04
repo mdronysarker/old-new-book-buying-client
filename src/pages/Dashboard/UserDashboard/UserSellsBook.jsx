@@ -108,7 +108,7 @@ const UserSellsBook = () => {
           userId:userId,
           image:await uploadImages(),
           bookType:'old',
-          date: new Date(),
+          createdAt: new Date(),
           category:selectCategory
         }
         

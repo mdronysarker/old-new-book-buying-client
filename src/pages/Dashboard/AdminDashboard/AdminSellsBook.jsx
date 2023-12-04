@@ -107,7 +107,7 @@ const AdminSellsBook = () => {
           userId:userId,
           image:await uploadImages(),
           bookType:'new',
-          date: new Date()
+          createdAt: new Date(),
         }
         
         axios.post('http://localhost:5000/AddBook',bookInfo)

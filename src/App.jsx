@@ -20,6 +20,7 @@ import NewBook from "./pages/Dashboard/AdminDashboard/NewBook";
 import OldBook from "./pages/Dashboard/AdminDashboard/OldBook";
 import PrevousOrder from "./pages/Dashboard/UserDashboard/PrevousOrder";
 import ProfilePage from "./pages/Dashboard/UserDashboard/ProfilePage";
+import AdminReport from "./pages/Dashboard/AdminDashboard/AdminReport";
 
 
 const routers = createBrowserRouter([
@@ -109,6 +110,9 @@ const routers = createBrowserRouter([
           },{
             path: 'profilePage',
             element:<ProfilePage/>
+          },{
+            path: 'adminReport',
+            element:<AdminReport/>
           }
         ]
       },{

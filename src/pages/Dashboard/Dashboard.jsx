@@ -18,6 +18,7 @@ return (
         <div className='menu p-4 w-80 h-full text-base-content'>
             <ul className="bg-base-200 rounded-md h-[80%] p-5 pl-10">
                 <li><Link  to='/dashboard/profilePage'> Profile Page </Link></li>
+                <li><Link  to='/dashboard/adminReport'> Admin Report  </Link></li>
                 <li><Link to='/dashboard/userSellsBook'> User Book Request  </Link></li>
                 <li><Link to='/dashboard/adminSellsBook'> Admin Book Request </Link></li>
                 <li><Link to='/dashboard/adminBookApproved'>Admin Book Approved</Link></li>
