@@ -5,9 +5,11 @@ import Image from "../components/layout/Image";
 import useUserInfo from "../CustomHook/useUserInfo";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { BeatLoader } from "react-spinners";
 
 const Cart = () => {
   const [productList, setProductList] = useState([]);
+  const [loading, setLoading] = useState(false);
   // console.log(productList);
 
   const totalPrice = productList.reduce(
@@ -50,35 +52,39 @@ const Cart = () => {
     setProductList(updatedList);
   };
 
-  const deleteProduct = (productId)=>{
-    axios.post('http://localhost:5000/deleteCartItem',{productId})
-    .then(res=>{
-      if(res.data.status){
-        Swal.fire({
-        icon: "success",
-        title: "Item Delete ",
-        text: "Your item is deleted from the cart",
-        timer: 1000,
-      });
-        let newArray = productList.filter(item=>item._id!==productId);
-        setProductList(newArray)
-      }
-    })
-    .catch(err=>console.log(err))
-  }
-  const completeOrder = ()=>{
-    axios.post('http://localhost:5000/addCompleteOrder',{productList,userId})
-    .then(res=>{
-      if(res.data.status){
-         Swal.fire({
-          icon:"success",
-          title: "Order Submitted Successfuly",
-          text:'Your order will be move in 3 days'
-         })
-      }
-    })
-    .catch(err=>console.log(err))
-  }
+  const deleteProduct = (productId) => {
+    axios
+      .post("http://localhost:5000/deleteCartItem", { productId })
+      .then((res) => {
+        if (res.data.status) {
+          Swal.fire({
+            icon: "success",
+            title: "Item Delete ",
+            text: "Your item is deleted from the cart",
+            timer: 1000,
+          });
+          let newArray = productList.filter((item) => item._id !== productId);
+          setProductList(newArray);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  const completeOrder = () => {
+    setLoading(true);
+    axios
+      .post("http://localhost:5000/addCompleteOrder", { productList, userId })
+      .then((res) => {
+        if (res.data.status) {
+          Swal.fire({
+            icon: "success",
+            title: "Order Submitted Successfuly",
+            text: "Your order will be move in 3 days",
+          });
+          setLoading(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     axios
@@ -109,10 +115,13 @@ const Cart = () => {
           <Flex key={product._id} className="flex justify-between items-center">
             <div className="w-[23%] relative">
               <Flex className="flex justify-between items-center">
-
-                <ImCross className="cursor-pointer font-xl w-[100%]" onClick={()=>{deleteProduct(product._id,)}} />
+                <ImCross
+                  className="cursor-pointer font-xl w-[100%]"
+                  onClick={() => {
+                    deleteProduct(product._id);
+                  }}
+                />
                 <div className="w-[100%] mb-6">
-
                   <Image className="w-14" imgsrc={product.image} />
                 </div>
                 <h3 className="font-dm font-bold text-sm text-primary w-[100%]">
@@ -127,7 +136,7 @@ const Cart = () => {
                   onClick={() => {
                     changeQuantity("decrease", index);
                   }}
-                > 
+                >
                   -
                 </button>
                 <span className="mx-[10px]"> {product.quantity}</span>
@@ -146,28 +155,42 @@ const Cart = () => {
           </Flex>
         ))}
       </div>
-   {productList.length>0 && <>
-      <div>
-        <h3 className="flex justify-end font-dm font-bold text-xl">
-          Cart Totals
-        </h3>
-      </div>
-      <div className="mt-8 ">
-        <Flex className="flex justify-end gap-x-8 ">
-          <h4>Total Price </h4>
-          <p>${totalPrice}</p>
-        </Flex>
-        <Flex className="flex justify-end gap-x-8 mt-3 ">
-          <h4>Service Charge </h4>
-          <p>32$</p>
-        </Flex>
-      </div>
-      <div className="flex justify-end mt-4">
-        <button onClick={completeOrder} className="bg-primary py-4 px-24 font-dm text-sm font-bold text-white">
-          Order
-        </button>
-      </div>
-      </>}
+      {productList.length > 0 && (
+        <>
+          <div>
+            <h3 className="flex justify-end font-dm font-bold text-xl">
+              Cart Totals
+            </h3>
+          </div>
+          <div className="mt-8 ">
+            <Flex className="flex justify-end gap-x-8 ">
+              <h4>Total Price </h4>
+              <p>${totalPrice}</p>
+            </Flex>
+            <Flex className="flex justify-end gap-x-8 mt-3 ">
+              <h4>Service Charge </h4>
+              <p>32$</p>
+            </Flex>
+          </div>
+          <div className="flex justify-end mt-4">
+            {loading ? (
+              <button
+                onClick={completeOrder}
+                className="bg-primary py-4 px-24 font-dm text-sm font-bold text-white"
+              >
+                <BeatLoader color="#36d7b7" />
+              </button>
+            ) : (
+              <button
+                onClick={completeOrder}
+                className="bg-primary py-4 px-24 font-dm text-sm font-bold text-white"
+              >
+                Order
+              </button>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

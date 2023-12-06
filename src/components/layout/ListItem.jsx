@@ -1,10 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const ListItem = ({ itemname, className, href }) => {
   return (
     <li className={className}>
-      <Link to={href}>{itemname}</Link>
+      <NavLink
+        className={({ isActive }) => (isActive ? "font-bold" : "font-regular")}
+        to={href}
+      >
+        {itemname}
+      </NavLink>
     </li>
   );
 };

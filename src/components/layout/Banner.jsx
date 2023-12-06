@@ -92,13 +92,13 @@ const Banner = () => {
     <div>
       <Slider {...settings}>
         <div>
-          <Image className="w-full" imgsrc="images/banner2.jpg" />
+          <Image className="w-[100%] h-[520px]" imgsrc="images/banner.webp" />
         </div>
         <div>
-          <Image imgsrc="images/banner.png" />
+          <Image className="w-[100%] h-[520px]" imgsrc="images/banner3.jpg" />
         </div>
         <div>
-          <Image imgsrc="images/banner.png" />
+          <Image className="w-[100%] h-[520px]" imgsrc="images/banner2.jpg" />
         </div>
       </Slider>
     </div>

@@ -88,7 +88,7 @@ const NavBar = () => {
             {show && (
               <List className="lg:flex lg:justify-end lg:gap-x-10 mt-5 lg:mt-0">
                 <ListItem
-                  className="font-dm text-sm font-bold hover:font-bold my-2.5 lg:my-0"
+                  className="font-dm text-sm font-regular  hover:font-bold my-2.5 lg:my-0"
                   itemname={"Home"}
                   href="/"
                 />
@@ -108,11 +108,6 @@ const NavBar = () => {
                   itemname={"Contact"}
                   href="/contact"
                 />
-                <ListItem
-                  className="font-dm text-sm font-regular hover:font-bold my-2.5 lg:my-0"
-                  itemname={"Inner page"}
-                  href="/innerPage"
-                />
                 <div className="flex items-center">
                   <Flex className="flex gap-x-10">
                     <Dropdown className=" z-50 relative" dropref={userref}>
@@ -122,8 +117,8 @@ const NavBar = () => {
                       </div>
                       {userDropDownShow && (
                         <List className="absolute mt-6 right-20 w-[200px] bg-white text-primary text-center font-regular font-dm text-sm border border-solid border-[#f0f0f0] z-50">
-                          <ListItem 
-                            href='/dashboard'
+                          <ListItem
+                            href="/dashboard"
                             className="py-4 px-5  border-b border-solid border-[#f0f0f0] hover:bg-primary hover:text-white duration-100 ease-in  "
                             itemname="My Account"
                           ></ListItem>
