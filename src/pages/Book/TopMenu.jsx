@@ -7,14 +7,14 @@ export default function TopMenu() {
 
     const handleType = (e)=>{ 
        const type = e.target.value;  
-       console.log("set type",e.target.value)
+      // console.log("set type",e.target.value)
        dispatch({type:'SET_TYPE',payload:type});
     }
 
     const handlePage = (e) =>{
         const page = parseInt(e.target.value);
         dispatch({type:'SET_PER_PAGE',payload:page});
-        console.log("per page  ",e.target.value);
+      //  console.log("per page  ",e.target.value);
     }
 
   return (

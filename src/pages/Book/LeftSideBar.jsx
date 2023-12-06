@@ -8,7 +8,7 @@ const LeftSideBar = () => {
   const [allCategory, setAllCategory] = useState([]);
   const { dispatch } = useContext(BookContext);
 
-  useEffect(() => {  
+  useEffect(() => {
     axios
       .get("http://localhost:5000/getAllCategory")
       .then((res) => {
@@ -24,9 +24,9 @@ const LeftSideBar = () => {
   };
 
   return (
-    <div>
+    <div className="mb-[20px]">
       <h3> Book by Category </h3>
-      <List className="absolute mt-6 w-[263px] text-[#767676] font-regular font-dm text-sm z-50">
+      <List className=" mt-6 w-[263px] text-[#767676] font-regular font-dm text-sm z-50">
         {allCategory.map((category) => (
           <li
             key={category._id}

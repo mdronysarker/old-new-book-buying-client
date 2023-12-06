@@ -2,8 +2,8 @@ import React from "react";
 
 const Contact = () => {
   return (
-    <div className="max-w-container mx-auto p-2.5">
-      <div className="w-2/4">
+    <div className="max-w-container mx-auto p-2.5 ">
+      <div className="w-2/4  ">
         <h2 className="mb-10 font-dm text-4xl font-bold">Fill up a Form</h2>
         <div className="mb-6">
           <h4 className="placeholder:font-regular mb-2.5 font-dm text-base font-bold placeholder:font-dm placeholder:text-sm placeholder:text-[#767676]">
