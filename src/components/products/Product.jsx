@@ -10,12 +10,22 @@ import { Link } from "react-router-dom";
 
 const Product = ({ item}) => {
 
-  const { userId } = useUserInfo();
-
+  const { userId,role } = useUserInfo();
+ // console.log('Role => ',role)
   const addToCart = ()=>{
       const data = {
         userId:userId,
         productId: item._id,
+      }
+  
+      if(role!=='user'){
+        Swal.fire({
+              icon:'warning',
+              title:'Not Authorized',
+              text:'Only User can add to cart ',
+              timer:700
+          })
+          return;
       }
      // console.log("data => ",data)
       axios.post('http://localhost:5000/addToCart',data)

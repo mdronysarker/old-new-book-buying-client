@@ -108,6 +108,7 @@ const NavBar = () => {
                   itemname={"Contact"}
                   href="/contact"
                 />
+                {user ?
                 <div className="flex items-center">
                   <Flex className="flex gap-x-10">
                     <Dropdown className=" z-50 relative" dropref={userref}>
@@ -122,7 +123,8 @@ const NavBar = () => {
                             className="py-4 px-5  border-b border-solid border-[#f0f0f0] hover:bg-primary hover:text-white duration-100 ease-in  "
                             itemname="My Account"
                           ></ListItem>
-                          <ListItem
+                          <ListItem 
+                            click={true}
                             className="py-4 px-5   border-b border-solid border-[#f0f0f0] hover:text-white hover:bg-primary duration-100 ease-in"
                             itemname="Logout"
                           ></ListItem>
@@ -131,55 +133,21 @@ const NavBar = () => {
                     </Dropdown>
                     <div>
                       <Dropdown className="relative" dropref={cartref}>
-                        <MdShoppingCart className="text-2xl" />
-
-                        {cartDropDownShow && (
-                          <div className="absolute mt-6 right-20 w-[360px] boder border-solid border-[#f0f0f0] z-40 ">
-                            <div className=" bg-[#f5f5f3] p-5 ">
-                              <Flex className="flex gap-5">
-                                <div className="w-4/12">
-                                  <Image
-                                    className="w-14"
-                                    imgsrc="images/cart-image.png"
-                                  />
-                                </div>
-                                <div className="relative flex w-4/6 flex-col justify-center">
-                                  <h3 className="font-dm font-bold text-sm text-primary">
-                                    Novel Book
-                                  </h3>
-                                  <p className="mt-3 font-dm font-bold text-sm text-primary">
-                                    $5
-                                  </p>
-                                  <ImCross className="absolute text-sm  right-0 " />
-                                </div>
-                              </Flex>
-                            </div>
-                            <div className="bg-white p-5">
-                              <h4 className="font-dm font-regular text-base text-[#767676]">
-                                Subtotal:{" "}
-                                <span className="font-blod text-primary">
-                                  $5
-                                </span>
-                              </h4>
-                              <Link
-                                to="/cart"
-                                className="inline-block font-dm font-bold text-sm py-4 px-10 border border-solid border-primary mt-3"
-                              >
-                                View Cart
-                              </Link>
-                              <Link
-                                to="#"
-                                className="inline-block font-dm font-bold text-sm text-white py-4 px-10 border border-solid border-primary mt-3 bg-primary ml-5"
-                              >
-                                Order
-                              </Link>
-                            </div>
-                          </div>
-                        )}
+                        <Link to='/cart'>
+                          <MdShoppingCart className="text-2xl" />
+                          </Link> 
                       </Dropdown>
                     </div>
                   </Flex>
                 </div>
+                 : 
+                <ListItem
+                  className="font-dm text-sm font-regular hover:font-bold my-2.5 lg:my-0"
+                  itemname={"Login"}
+                  href="/login"
+                />
+
+                }
               </List>
             )}
           </div>

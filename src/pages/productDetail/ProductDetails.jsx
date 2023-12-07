@@ -22,9 +22,18 @@ const ProductDetails = () => {
     .catch(err=> console.log(err))
   },[productId]);
 
-    const { userId } = useUserInfo();
+    const { userId,role } = useUserInfo();
 
   const addToCart = ()=>{
+     if(role!=='user'){
+      Swal.fire({
+              icon:'warning',
+              title:'Not authorized',
+              text:'Only users can add to cart',
+              timer:700
+          })
+     }
+
       const data = {
         userId:userId,
         productId: productId,
@@ -52,8 +61,6 @@ const ProductDetails = () => {
   }
 
   const quantityChange = (item) => {
-    console.log('item ',item);
-    console.log('quantity ',quantity)
      if(item>quantity){
       if(quantity===book.bookQuantity){
         Swal.fire({
@@ -94,7 +101,7 @@ const ProductDetails = () => {
             </p>
           </div>
           <div className="flex items-center gap-5">
-            <span className="font-dm text-[14px] font-medium inline-block">
+            {/* <span className="font-dm text-[14px] font-medium inline-block">
               Qty
             </span>
             <input
@@ -103,7 +110,7 @@ const ProductDetails = () => {
               onChange={(e)=>{quantityChange(e.target.value)}}
               placeholder="1"
               value={quantity}
-            />
+            /> */}
             <button onClick={addToCart} className="bg-[#ce7852] text-[#fff] px-[25px] py-2 hover:border hover:border-solid hover:border-black hover:bg-white hover:text-black  transition ease-in-out delay-100">
               ADD TO CART
             </button>

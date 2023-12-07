@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Flex from "../../components/layout/Flex";
-import Pagination from "../../components/layout/Pagination";
+import Pagination from "./Pagination";
 import LeftSideBar from "./LeftSideBar";
 import TopMenu from "./TopMenu";
 import BookList from "./BookList";
@@ -8,9 +8,6 @@ import BookList from "./BookList";
 const Book = () => {
   const [showNumber, setShowNumber] = useState(12);
 
-  // const handlePaginationChange = (e) => {
-  //   setShowNumber(Number(e.target.value));
-  // };
 
   return (
     <>

@@ -6,17 +6,21 @@ export default function ProfilePage() {
 
     const {userId} = useUserInfo();
     const [userInfo,setUserInfo] = useState({});
+    const [loading,setLoading] = useState(true);
 
     useEffect(()=>{
         axios.post('http://localhost:5000/getUserInfo',{userId})
         .then((res)=>{
-            setUserInfo(res.data)
-            // console.log("user data => ",res.data)
+            setUserInfo(res.data);
+            setLoading(false);
         })
         .catch(err=>console.log(err));
     },[userId])
 
-  return (
+  return ( 
+    <>
+    {loading && <h1>Loading...</h1> }
+    {!loading && 
     <div className='flex flex-col'>
       <div className="flex flex-row my-5">
         <h2 className='me-5'> Name : {userInfo.name}</h2>
@@ -30,6 +34,8 @@ export default function ProfilePage() {
         <h3 className='me-5'>Role : {userInfo.userRole}</h3>
         <h3>Total Money : {userInfo.totalMoney}</h3>
       </div>
-    </div>
+    </div> 
+    }
+    </>
   )
 }
