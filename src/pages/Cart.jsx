@@ -167,10 +167,10 @@ const Cart = () => {
               <h4>Total Price </h4>
               <p>${totalPrice}</p>
             </Flex>
-            <Flex className="flex justify-end gap-x-8 mt-3 ">
+            {/* <Flex className="flex justify-end gap-x-8 mt-3 ">
               <h4>Service Charge </h4>
               <p>32$</p>
-            </Flex>
+            </Flex> */}
           </div>
           <div className="flex justify-end mt-4">
             {loading ? (

@@ -21,7 +21,6 @@ const NavBar = () => {
   const [show, setShow] = useState(true);
   const { user, logOut } = useContext(AuthContext);
   const [userDropDownShow, setUserDropDownShow] = useState(false);
-  const [cartDropDownShow, setCartDropDownShow] = useState(false);
 
   const handleLogOut = () => {
     logOut()
@@ -46,7 +45,6 @@ const NavBar = () => {
   };
 
   const userref = useRef();
-  const cartref = useRef();
 
   useEffect(() => {
     document.body.addEventListener("click", (e) => {
@@ -57,12 +55,6 @@ const NavBar = () => {
       } else {
         setUserDropDownShow(false);
       }
-
-      if (cartref.current.contains(e.target)) {
-        setCartDropDownShow(true);
-      } else {
-        setCartDropDownShow(false);
-      }
     });
   }, []);
 
@@ -71,7 +63,7 @@ const NavBar = () => {
       <div className="max-w-container mx-auto p-2">
         <Flex className="lg:flex lg:items-center">
           <div className="lg:w-3/12">
-            <Image imgsrc="images/logo.png" />
+            <Image imgsrc="./images/logo.png" />
           </div>
           <div className="w-auto lg:w-[600px] relative">
             <Search
@@ -108,46 +100,43 @@ const NavBar = () => {
                   itemname={"Contact"}
                   href="/contact"
                 />
-                {user ?
-                <div className="flex items-center">
-                  <Flex className="flex gap-x-10">
-                    <Dropdown className=" z-50 relative" dropref={userref}>
-                      <div className="flex items-center">
-                        <BiSolidUser />
-                        <RxTriangleDown />
-                      </div>
-                      {userDropDownShow && (
-                        <List className="absolute mt-6 right-20 w-[200px] bg-white text-primary text-center font-regular font-dm text-sm border border-solid border-[#f0f0f0] z-50">
-                          <ListItem
-                            href="/dashboard"
-                            className="py-4 px-5  border-b border-solid border-[#f0f0f0] hover:bg-primary hover:text-white duration-100 ease-in  "
-                            itemname="My Account"
-                          ></ListItem>
-                          <ListItem 
-                            click={true}
-                            className="py-4 px-5   border-b border-solid border-[#f0f0f0] hover:text-white hover:bg-primary duration-100 ease-in"
-                            itemname="Logout"
-                          ></ListItem>
-                        </List>
-                      )}
-                    </Dropdown>
-                    <div>
-                      <Dropdown className="relative" dropref={cartref}>
-                        <Link to='/cart'>
-                          <MdShoppingCart className="text-2xl" />
-                          </Link> 
+                {user ? (
+                  <div className="flex items-center">
+                    <Flex className="flex gap-x-10">
+                      <Dropdown className=" z-50 relative" dropref={userref}>
+                        <div className="flex items-center">
+                          <BiSolidUser />
+                          <RxTriangleDown />
+                        </div>
+                        {userDropDownShow && (
+                          <List className="absolute mt-6 right-20 w-[200px] bg-white text-primary text-center font-regular font-dm text-sm border border-solid border-[#f0f0f0] z-50">
+                            <ListItem
+                              href="/dashboard"
+                              className="py-4 px-5  border-b border-solid border-[#f0f0f0] hover:bg-primary hover:text-white duration-100 ease-in  "
+                              itemname="My Account"
+                            ></ListItem>
+                            <ListItem
+                              click={true}
+                              className="py-4 px-5   border-b border-solid border-[#f0f0f0] hover:text-white hover:bg-primary duration-100 ease-in"
+                              itemname="Logout"
+                            ></ListItem>
+                          </List>
+                        )}
                       </Dropdown>
-                    </div>
-                  </Flex>
-                </div>
-                 : 
-                <ListItem
-                  className="font-dm text-sm font-regular hover:font-bold my-2.5 lg:my-0"
-                  itemname={"Login"}
-                  href="/login"
-                />
-
-                }
+                      <div>
+                        <Link to="/cart">
+                          <MdShoppingCart className="text-2xl" />
+                        </Link>
+                      </div>
+                    </Flex>
+                  </div>
+                ) : (
+                  <ListItem
+                    className="font-dm text-sm font-regular hover:font-bold my-2.5 lg:my-0"
+                    itemname={"Login"}
+                    href="/login"
+                  />
+                )}
               </List>
             )}
           </div>
