@@ -23,6 +23,7 @@ import ProfilePage from "./pages/Dashboard/UserDashboard/ProfilePage";
 import AdminReport from "./pages/Dashboard/AdminDashboard/AdminReport";
 import SupplierBookList from "./pages/Dashboard/SupplierDashboard/SupplierBookList";
 import PrivateRoute from "./context/PrivateContext";
+import DonarPreveusDonation from "./pages/Dashboard/SupplierDashboard/DonarPreveusDonation";
 
 
 const routers = createBrowserRouter([
@@ -115,9 +116,12 @@ const routers = createBrowserRouter([
           },{
             path: 'adminReport',
             element:<AdminReport/>
-          },{
+          },{ 
             path: 'supplierBookList',
             element: <SupplierBookList/>
+          },{
+          path:'donarPrevousDonation',
+          element: <DonarPreveusDonation/>
           }
         ]
       },{

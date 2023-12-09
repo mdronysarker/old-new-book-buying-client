@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useUserInfo from '../../../CustomHook/useUserInfo';
 
 export default function SupplierBookList() {
@@ -35,7 +35,7 @@ export default function SupplierBookList() {
         <td>
           <div className="flex items-center space-x-3">
             {/* <div className="avatar">
-              <div className="mask mask-squircle w-12 h-12">
+              <div className="w-12 h-12 mask mask-squircle">
                 <img src={item.image} alt={item.title} />
               </div>
             </div> */}

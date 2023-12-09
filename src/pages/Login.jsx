@@ -33,8 +33,6 @@ const Login = () => {
     onSubmit: () => {
       signInUser(formik.values.email, formik.values.password)
             .then(result => {
-                const user = result.user;
-                console.log(user);
                 Swal.fire({
                     title: 'User Login Successful.',
                     showClass: {
@@ -52,7 +50,7 @@ const Login = () => {
 
   return (
     <div className="max-w-container mx-auto p-2.5 mt-12">
-      <Flex className="flex g items-center ap-7">
+      <Flex className="flex items-center g ap-7">
         <div className="w-[48%]">
           <img src="images/login.png" alt="regtration" />
         </div>
@@ -117,7 +115,7 @@ const Login = () => {
               </div>
               <button
                 type="submit"
-                className="bg-primary py-4 px-24 font-dm text-sm font-bold text-white  border  hover:text-primary hover:bg-white hover:border hover:border-primary"
+                className="px-24 py-4 text-sm font-bold text-white border bg-primary font-dm hover:text-primary hover:bg-white hover:border hover:border-primary"
               >
                 SIGN IN
               </button>

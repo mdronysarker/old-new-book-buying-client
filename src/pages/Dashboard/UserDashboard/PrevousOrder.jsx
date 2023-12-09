@@ -13,7 +13,7 @@ export default function PrevousOrder() {
     .catch(err=>console.log(err))
   },[userId])
 
-   console.log("bookList  ",bookList);
+  //  console.log("bookList  ",bookList);
 
   return (
     <div className='font-poppins '>
@@ -35,7 +35,7 @@ export default function PrevousOrder() {
         <td>
           <div className="flex items-center space-x-3">
             {/* <div className="avatar">
-              <div className="mask mask-squircle w-12 h-12">
+              <div className="w-12 h-12 mask mask-squircle">
                 <img src={item.image} alt={item.title} />
               </div>
             </div> */}

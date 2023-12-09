@@ -1,16 +1,16 @@
-import axios from "axios";
-import { useEffect } from "react";
-import { useState } from "react";
+import axios from 'axios';
+import { useEffect, useState } from 'react'
+import useUserInfo from '../../../CustomHook/useUserInfo';
 
-export default function AdminReport() {
+const DonarPreveusDonation = () => {
+
   const [bookList, setBookList] = useState([]);
-
+  const {userId} = useUserInfo();
   useEffect(() => {
     axios
-      .get("http://localhost:5000/getReport")
+      .post("http://localhost:5000/getDonatedBookList",{userId})
       .then((res) => {
         setBookList(res.data);
-        // console.log('report ', res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -18,14 +18,15 @@ export default function AdminReport() {
   }, []);
 
   return (
-     <div className="font-poppins ">
+    <div className="font-poppins ">
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
           <thead>
             <tr>
               <th>Book Name</th>
-              <th>Book Type </th>
+              <th>Author Name</th>
+              <th>Publisher</th>
               <th>Quantity</th>
               <th>Price</th>
               <th>Date</th>
@@ -38,16 +39,23 @@ export default function AdminReport() {
                   <td>
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
+                        <div className="w-12 h-12 mask mask-squircle">
+                          <img src={item.image} alt={item.title} />
+                        </div>
                       </div>
                       <div>
                         <div className="font-bold hover:text-purple-700">
                           {item.bookName}
                         </div>
+                        <div className="text-sm opacity-50">
+                          {item.category}
+                        </div>
                       </div>
                     </div>
                   </td>
-                  <td>{item.bookType}</td>
-                  <td>{item.quantity}</td>
+                  <td>{item.bookAuthor}</td>
+                  <td>{item.publisher}</td>
+                  <td>{item.bookQuantity}</td>
                   <td>{item.price}</td>
                   <td>{item.date}</td>
                 </tr>
@@ -56,5 +64,7 @@ export default function AdminReport() {
         </table>
       </div>
     </div>
-  );
+  )
 }
+
+export default DonarPreveusDonation
