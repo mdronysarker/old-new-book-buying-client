@@ -27,8 +27,8 @@ return (
                 <li><Link  to='/dashboard/newBook' >New Books</Link></li>
                  </>}
                  
-                 {role ==='donar' && <li><Link to='/dashboard/userSellsBook'> User Book Request  </Link></li>}
-                
+                 {role ==='donor' && <li><Link to='/dashboard/userSellsBook'> User Book Request  </Link></li>}
+                {role ==='donor' && <li><Link to='/dashboard/supplierBookList'> Donated Book List  </Link></li>}
                 {role ==='suppier' && <li><Link to='/dashboard/supplierBookApproved'>Supplier Book Approved </Link></li>}
                 
                 {role==='user' && <li><Link  to='/dashboard/prevousOrder'> Prevous Order</Link></li>}

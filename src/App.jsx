@@ -21,6 +21,7 @@ import OldBook from "./pages/Dashboard/AdminDashboard/OldBook";
 import PrevousOrder from "./pages/Dashboard/UserDashboard/PrevousOrder";
 import ProfilePage from "./pages/Dashboard/UserDashboard/ProfilePage";
 import AdminReport from "./pages/Dashboard/AdminDashboard/AdminReport";
+import SupplierBookList from "./pages/Dashboard/SupplierDashboard/SupplierBookList";
 
 
 const routers = createBrowserRouter([
@@ -113,6 +114,9 @@ const routers = createBrowserRouter([
           },{
             path: 'adminReport',
             element:<AdminReport/>
+          },{
+            path: 'supplierBookList',
+            element: <SupplierBookList/>
           }
         ]
       },{
