@@ -3,6 +3,7 @@ import List from "../../components/layout/List";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BookContext } from "../../context/BookContext";
+import { useReducer } from "react";
 
 const LeftSideBar = () => {
   const [allCategory, setAllCategory] = useState([]);
@@ -22,6 +23,8 @@ const LeftSideBar = () => {
   const handleCategory = (category) => {
     dispatch({ type: "SET_CATEGORY", payload: category });
   };
+
+  // console.log(allCategory);
 
   return (
     <div className="mb-[20px]">

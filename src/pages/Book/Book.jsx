@@ -8,17 +8,16 @@ import BookList from "./BookList";
 const Book = () => {
   const [showNumber, setShowNumber] = useState(12);
 
-
   return (
     <>
       <div className="max-w-container mx-auto p-2.5">
         <Flex className="flex gap-x-10 ">
           <div className="w-[25%]  mt-[102px]">
-            <LeftSideBar /> 
+            <LeftSideBar />
           </div>
           <div className="w-[75%] relative">
-           <TopMenu/>
-             <BookList/>
+            <TopMenu />
+            <BookList />
             <Pagination itemsPerPage={showNumber} />
           </div>
         </Flex>
