@@ -24,6 +24,9 @@ import AdminReport from "./pages/Dashboard/AdminDashboard/AdminReport";
 import SupplierBookList from "./pages/Dashboard/SupplierDashboard/SupplierBookList";
 import PrivateRoute from "./context/PrivateContext";
 import DonarPreveusDonation from "./pages/Dashboard/SupplierDashboard/DonarPreveusDonation";
+import DeliveryProduct from "./pages/Dashboard/AdminDashboard/DeliveryProduct";
+import Checkout from "./pages/Checkout";
+import Invoice from "./pages/Invoice";
 
 
 
@@ -123,12 +126,21 @@ const routers = createBrowserRouter([
           },{
           path:'donarPrevousDonation',
           element: <DonarPreveusDonation/>
+          },{
+            path: 'deliveryProduct',
+            element: <DeliveryProduct />
           }
         ]
       },{
         path: 'cart',
         element:<Cart/>
-      },
+      },{
+          path: 'checkout',
+          element: <Checkout/>
+        },{
+          path:'invoice',
+          element: <Invoice />
+        }
     ]
   }
 ])

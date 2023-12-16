@@ -5,19 +5,28 @@ import Image from "../components/layout/Image";
 import useUserInfo from "../CustomHook/useUserInfo";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { BeatLoader } from "react-spinners";
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const [productList, setProductList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  // console.log(productList);
-
+  const navigate = useNavigate()
   const totalPrice = productList.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
 
   const { userId } = useUserInfo();
+
+        const completeOrder = () => {
+    axios
+      .post("http://localhost:5000/addCompleteOrder", { productList, userId })
+      .then((res) => {
+        if (res.data.status) {
+          navigate('/checkout')
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   const changeQuantity = (type, index) => {
     const updatedList = [...productList];
@@ -69,22 +78,7 @@ const Cart = () => {
       })
       .catch((err) => console.log(err));
   };
-  const completeOrder = () => {
-    setLoading(true);
-    axios
-      .post("http://localhost:5000/addCompleteOrder", { productList, userId })
-      .then((res) => {
-        if (res.data.status) {
-          Swal.fire({
-            icon: "success",
-            title: "Order Submitted Successfuly",
-            text: "Your order will be move in 3 days",
-          });
-          setLoading(false);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+
 
   useEffect(() => {
     axios
@@ -101,7 +95,7 @@ const Cart = () => {
 
   return (
     <div className="max-w-container mx-auto p-2.5">
-      <h2 className="mb-10 font-dm text-4xl font-bold">Cart</h2>
+      <h2 className="mb-10 text-4xl font-bold font-dm">Cart</h2>
       <div className="bg-[#F5F7F7] py-[34px] px-5 ">
         <Flex className="flex justify-between">
           <div className="w-[23%]">Product</div>
@@ -112,9 +106,9 @@ const Cart = () => {
       </div>
       <div className="py-[34px] px-5">
         {productList.map((product, index) => (
-          <Flex key={product._id} className="flex justify-between items-center">
+          <Flex key={product._id} className="flex items-center justify-between">
             <div className="w-[23%] relative">
-              <Flex className="flex justify-between items-center">
+              <Flex className="flex items-center justify-between">
                 <ImCross
                   className="cursor-pointer font-xl w-[100%]"
                   onClick={() => {
@@ -158,7 +152,7 @@ const Cart = () => {
       {productList.length > 0 && (
         <>
           <div>
-            <h3 className="flex justify-end font-dm font-bold text-xl">
+            <h3 className="flex justify-end text-xl font-bold font-dm">
               Cart Totals
             </h3>
           </div>
@@ -167,27 +161,26 @@ const Cart = () => {
               <h4>Total Price </h4>
               <p>${totalPrice}</p>
             </Flex>
-            {/* <Flex className="flex justify-end gap-x-8 mt-3 ">
-              <h4>Service Charge </h4>
-              <p>32$</p>
-            </Flex> */}
           </div>
           <div className="flex justify-end mt-4">
-            {loading ? (
-              <button
-                onClick={completeOrder}
-                className="bg-primary py-4 px-24 font-dm text-sm font-bold text-white"
+            <button 
+              onClick={completeOrder}
+                className="px-24 py-4 text-sm font-bold text-white bg-primary font-dm" >
+                Checkout
+              </button>
+            {/* {loading ? (
+              <Link
+                href='/checkout'
+                className="px-24 py-4 text-sm font-bold text-white bg-primary font-dm"
               >
                 <BeatLoader color="#36d7b7" />
-              </button>
+              </Link>
             ) : (
-              <button
-                onClick={completeOrder}
-                className="bg-primary py-4 px-24 font-dm text-sm font-bold text-white"
-              >
-                Order
-              </button>
-            )}
+              
+              
+            )} */}
+
+           {/* TODO edit to checkout pages */}
           </div>
         </>
       )}
