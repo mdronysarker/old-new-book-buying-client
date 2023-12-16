@@ -22,6 +22,7 @@ import PrevousOrder from "./pages/Dashboard/UserDashboard/PrevousOrder";
 import ProfilePage from "./pages/Dashboard/UserDashboard/ProfilePage";
 import AdminReport from "./pages/Dashboard/AdminDashboard/AdminReport";
 import SupplierBookList from "./pages/Dashboard/SupplierDashboard/SupplierBookList";
+import PrivateRoute from "./context/PrivateContext";
 
 
 const routers = createBrowserRouter([
@@ -67,7 +68,7 @@ const routers = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <Dashboard />,
+        element:<PrivateRoute><Dashboard /> </PrivateRoute> ,
         children: [
           {
             path: "addBooks",
