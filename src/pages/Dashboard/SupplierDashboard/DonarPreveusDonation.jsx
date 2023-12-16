@@ -6,8 +6,10 @@ const DonarPreveusDonation = () => {
 
   const [bookList, setBookList] = useState([]);
   const {userId} = useUserInfo();
-  useEffect(() => {
-    axios
+  console.log('user id => ',userId)
+  useEffect(() => { 
+    if(userId){
+        axios
       .post("http://localhost:5000/getDonatedBookList",{userId})
       .then((res) => {
         setBookList(res.data);
@@ -15,7 +17,9 @@ const DonarPreveusDonation = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    }
+    
+  }, [userId]);
 
   return (
     <div className="font-poppins ">
