@@ -5,28 +5,29 @@ import { useFormik } from "formik";
 import { Billing } from "../validation";
 import axios from "axios";
 import useUserInfo from "../CustomHook/useUserInfo";
-import Swal from "sweetalert2";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { useCart } from "../context/CartContext";
+import { FaCreditCard } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const Checkout = () => {
-  const {userId} = useUserInfo();
-  const [productList, setProductList] = useState([]);
+  const [Payment, setPayment] = useState(false);
+
+  const hanldeShowPayment = () => {
+    setPayment(!Payment);
+  };
+
+  const { userId } = useUserInfo();
   const navigate = useNavigate();
+
+  // From cart Context api (context /cartContext)
+  const { productList, loading, setLoading } = useCart();
 
   const totalPrice = productList.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
-
-    useEffect(() => {
-    axios
-      .post("http://localhost:5000/getCheckoutList", { userId })
-      .then((res) => {
-        setProductList(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [userId]);
 
   const initialValues = {
     name: "",
@@ -35,49 +36,62 @@ const Checkout = () => {
     city: "",
     house: "",
     email: "",
+    number: "",
+    expiry: "",
+    cvc: "",
   };
-
-  //     const completeOrder = () => {
-  //   setLoading(true);
-  //   axios
-  //     .post("http://localhost:5000/addCompleteOrder", { productList, userId })
-  //     .then((res) => {
-  //       if (res.data.status) {
-  //         Swal.fire({
-  //           icon: "success",
-  //           title: "Order Submitted Successfuly",
-  //           text: "Your order will be move in 3 days",
-  //         });
-  //         console.log('user id => ')
-         
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
-//   TODO needed card data from 
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: Billing,
     onSubmit: (values) => {
-     const invoice = uuidv4();
-     const date = new Date()
-     console.log('address ', values)
-    axios.post('http://localhost:5000/addAddress',{...values,userId,invoiceId:invoice,date})
-    .then(res => {
-        if(res.status){ 
-           navigate('/invoice')
-        }
-    })
-    .catch(err=> console.log(err)) 
-    // TODO After filling this form goto invoice pages 
-    // TODO Order created here 
-    // TODO order data will be created according to each user 
-    }, 
+      setLoading(true);
+      const invoice = uuidv4();
+      const date = new Date();
+      // console.log("address ", values);
+      axios
+        .post("http://localhost:5000/addAddress", {
+          ...values,
+          userId,
+          invoiceId: invoice,
+          date,
+        })
+        .then((res) => {
+          if (res.status) {
+            setLoading(true);
+            axios
+              .post("http://localhost:5000/addCompleteOrder", {
+                invoiceId: invoice,
+                address: formik.values.address,
+                city: formik.values.city,
+                house: formik.values.house,
+                name: formik.values.name,
+                productList,
+                userId,
+              })
+              .then((res) => {
+                if (res.data.status) {
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Payment Successful.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                  navigate("/invoice");
+                  setLoading(false);
+                }
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    },
   });
 
+  // console.log(formik);
 
+  // console.log(productList);
 
   return (
     <div className="max-w-container mx-auto p-2.5">
@@ -118,7 +132,7 @@ const Checkout = () => {
         </div>
         <div>
           <input
-            type="number"
+            type="text"
             placeholder="Mobile Number"
             name="phone"
             onChange={formik.handleChange}
@@ -188,53 +202,129 @@ const Checkout = () => {
             <div className="w-[23%]">Total</div>
           </Flex>
         </div>
-        {/* TODO Product Data will be shared here  */}
-        {
-        productList.map(product=> 
-           <Flex key={product._id} className="flex justify-between items-center my-[34px] mx-[5]">
-          <div className="w-[23%] relative">
-            <Flex className="flex items-center justify-between">
-              <h3 className="font-dm font-bold text-sm text-primary w-[100%]">
-                {product.bookName}
-              </h3>
-            </Flex>
-          </div>
-          <div className="w-[23%]"> {product.price} </div>
-          <div className="w-[23%] ">
-            <span className="mx-[10px]"> {product.quantity} </span>
-          </div>
-          <div className="w-[23%] font-dm text-[#262626] font-bold text-2xl ">
-          {product.quantity * product.price}
-          </div>
-        </Flex>  
-            )
-        }
-       
-        <div className="mt-[5px]">
-          <h3 className="flex justify-end text-xl font-bold font-dm">
-            Cart Totals
-          </h3>
-        </div>
-        <div className="mt-5 ">
-          <Flex className="flex justify-end gap-x-8 ">
-            <h4>Total Price </h4>
-            <p>{totalPrice}</p>
+
+        {productList.map((product) => (
+          <Flex
+            key={product._id}
+            className="flex justify-between items-center my-[34px] mx-[5]"
+          >
+            <div className="w-[23%] relative">
+              <Flex className="flex items-center justify-between">
+                <h3 className="font-dm font-bold text-sm text-primary w-[100%]">
+                  {product.bookName}
+                </h3>
+              </Flex>
+            </div>
+            <div className="w-[23%]"> {product.price} </div>
+            <div className="w-[23%] ">
+              <span className="mx-[10px]"> {product.quantity} </span>
+            </div>
+            <div className="w-[23%] font-dm text-[#262626] font-bold text-2xl ">
+              {product.price * product.quantity}
+            </div>
           </Flex>
-        </div>
-        <div className="flex justify-end mt-4">
-            <button  type="submit" className="px-24 py-4 text-sm font-bold text-white bg-primary font-dm">
-              Order
-            </button>
-          {/* {loading ? (
-            <button className="px-24 py-4 text-sm font-bold text-white bg-primary font-dm">
-              <BeatLoader color="#36d7b7" />
-            </button>
-          ) : (
-            <button className="px-24 py-4 text-sm font-bold text-white bg-primary font-dm">
-              Order
-            </button>
-          )} */}
-        </div>
+        ))}
+        {productList.length > 0 && (
+          <div>
+            <div className="mt-[5px]">
+              <h3 className="flex justify-end text-xl font-bold font-dm">
+                Cart Totals
+              </h3>
+            </div>
+            <div className="mt-5 ">
+              <Flex className="flex justify-end gap-x-8 ">
+                <h4>Total Price </h4>
+                <p>{totalPrice}</p>
+              </Flex>
+            </div>
+            <div
+              className="flex items-center gap-4 justify-end mt-5  "
+              onClick={hanldeShowPayment}
+            >
+              <FaCreditCard className="w-[40px] h-[40px]" />
+              <span className="text-xl font-bold font-dm">
+                Payment With Card
+              </span>
+            </div>
+            {Payment && (
+              <div className="flex flex-col mr-0 my-7 max-w-md mx-auto p-8 bg-white shadow-lg rounded-md">
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Card Number
+                  </label>
+                  <input
+                    type="text"
+                    name="number"
+                    onChange={formik.handleChange}
+                    value={formik.values.number}
+                    placeholder="Card Number"
+                    className="w-full p-2 border rounded-md"
+                  />
+                  {formik.errors.name && formik.touched.name ? (
+                    <p className="text-[#cd0404] mb-5">
+                      {formik.errors.number}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Expiry Date
+                  </label>
+                  <input
+                    type="tel"
+                    name="expiry"
+                    onChange={formik.handleChange}
+                    value={formik.values.expiry}
+                    placeholder="MM/YY"
+                    className="w-full p-2 border rounded-md"
+                  />
+                  {formik.errors.name && formik.touched.name ? (
+                    <p className="text-[#cd0404] mb-5">
+                      {formik.errors.expiry}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    CVC
+                  </label>
+                  <input
+                    type="tel"
+                    name="cvc"
+                    onChange={formik.handleChange}
+                    value={formik.values.cvc}
+                    placeholder="CVC"
+                    className="w-full p-2 border rounded-md"
+                  />
+                  {formik.errors.name && formik.touched.name ? (
+                    <p className="text-[#cd0404] mb-5">{formik.errors.cvc}</p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-end mt-4">
+              {loading ? (
+                <button className="px-24 py-4 text-sm font-bold text-white bg-primary font-dm">
+                  <BeatLoader color="#36d7b7" />
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="px-24 py-4 text-sm font-bold text-white bg-primary font-dm"
+                >
+                  Order
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </form>
     </div>
   );

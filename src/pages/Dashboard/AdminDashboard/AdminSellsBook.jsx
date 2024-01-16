@@ -10,6 +10,9 @@ import Swal from "sweetalert2";
 
 const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
+  // console.log(props);
+  // console.log(meta);
+  console.log(field);
   return (
     <>
       <div className="flex flex-col">
@@ -108,6 +111,7 @@ const AdminSellsBook = () => {
               image: await uploadImages(),
               bookType: "new",
               createdAt: new Date(),
+              category: selectCategory,
             };
 
             axios
@@ -150,13 +154,6 @@ const AdminSellsBook = () => {
                 />
               </div>
               <div className="flex flex-col lg:flex-row justify-start  lg:mt-5">
-                {/* <MyTextInput
-            label="Previous Price"
-            name="previousPrice"
-            type="number"
-            placeholder="$140"
-          /> */}
-
                 <div className="flex flex-col">
                   <label
                     className="text-md text-poppins text-md ms-1"
@@ -231,9 +228,8 @@ const AdminSellsBook = () => {
                   rows={10}
                 />
               </div>
-
               <button
-                className="btn btn-primary w-60 mt-5 justify-center mx-auto rounded-md"
+                className=" w-60 mt-5  px-[10px] py-4 mr-6 text-sm font-bold text-white border bg-primary font-dm hover:text-primary hover:bg-white hover:border hover:border-primary border-radius: rounded"
                 type="submit"
               >
                 Submit

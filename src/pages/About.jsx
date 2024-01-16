@@ -17,7 +17,7 @@ const About = () => {
         </Flex>
         <div className="mt-[20px]">
           <h4 className="font-regular font-dm text-[39px]">
-            Orebi is one of the world’s leading Old Book Shop.
+            Book store is one of the world’s leading Old Book Shop.
           </h4>
         </div>
         <Flex className="flex justify-between mt-[30px]">

@@ -38,9 +38,7 @@ const Dashboard = () => {
                     Admin Book Approved
                   </Link>
                 </li>
-                <li>
-                  <Link to="/dashboard/adminReport"> Admin Report </Link>
-                </li>
+
                 <li>
                   <Link to="/dashboard/addCategory"> Admin Add Category </Link>
                 </li>
@@ -50,17 +48,26 @@ const Dashboard = () => {
                 <li>
                   <Link to="/dashboard/newBook">New Books</Link>
                 </li>
-                 <li>
-              <Link to="/dashboard/deliveryProduct"> Delivery Lists </Link>
-            </li>
+                <li>
+                  <Link to="/dashboard/deliveryProduct"> Delivery Lists </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/adminReport"> Admin Report </Link>
+                </li>
               </>
             )}
-           
 
             {role === "donor" && (
               <li>
                 <Link to="/dashboard/userSellsBook"> User Book Request </Link>
-                <Link to="/dashboard/donarPrevousDonation"> Prevous Donation </Link>
+                <Link to="/dashboard/donarPrevousDonation">
+                  {" "}
+                  Prevous Donation{" "}
+                </Link>
+                <Link to="/dashboard/donarPendingDonation">
+                  {" "}
+                  Pending Donation
+                </Link>
               </li>
             )}
 

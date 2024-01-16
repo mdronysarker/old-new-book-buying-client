@@ -2,16 +2,15 @@ import React, { useContext } from "react";
 import { NavLink, redirect } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
-const ListItem = ({ itemname, className, href,click=false }) => {
+const ListItem = ({ itemname, className, href, click = false }) => {
+  const { logOut } = useContext(AuthContext);
 
-  const {logOut} = useContext(AuthContext);
-
-  const handleFunctionClick =()=>{
-    if(click){
-        logOut();
-        redirect('home');
+  const handleFunctionClick = () => {
+    if (click) {
+      logOut();
+      redirect("home");
     }
-  }
+  };
 
   return (
     <li className={className}>

@@ -27,8 +27,7 @@ import DonarPreveusDonation from "./pages/Dashboard/SupplierDashboard/DonarPreve
 import DeliveryProduct from "./pages/Dashboard/AdminDashboard/DeliveryProduct";
 import Checkout from "./pages/Checkout";
 import Invoice from "./pages/Invoice";
-
-
+import DonorPendingDonation from "./pages/DonorPendingDonation";
 
 const routers = createBrowserRouter([
   {
@@ -69,11 +68,19 @@ const routers = createBrowserRouter([
       },
       {
         path: `book/singleProduct/:productId`,
-        element: <BookProvider><ProductDetails />,</BookProvider>
+        element: (
+          <BookProvider>
+            <ProductDetails />,
+          </BookProvider>
+        ),
       },
       {
         path: "dashboard",
-        element:<PrivateRoute><Dashboard /> </PrivateRoute> ,
+        element: (
+          <PrivateRoute>
+            <Dashboard />{" "}
+          </PrivateRoute>
+        ),
         children: [
           {
             path: "addBooks",
@@ -88,62 +95,83 @@ const routers = createBrowserRouter([
             element: <AdminBookApprove />,
           },
           {
-            path:'addBooks',
-            element:<AddAPhotoOutlined/>
-          },{
-            path: 'userSellsBook',
-            element: <UserSellsBook/>,
-          },{
-            path: 'adminBookApproved',
-            element: <AdminBookApprove/>,
-          },{
-            path: 'adminSellsBook',
-            element: <AdminSellsBook/>
-          },{
-            path: 'supplierBookApproved',
-            element: <SupplierBookApprove />
-          },{
-            path: 'addCategory',
-            element: <EditCategory/>
-          },{
-            path: 'newBook',
-            element: <NewBook/>
-          },{
-            path: 'oldBook',
-            element: <OldBook/>
-          },{
-            path: 'prevousOrder',
-            element: <PrevousOrder/>
-          },{
-            path: 'profilePage',
-            element:<ProfilePage/>
-          },{
-            path: 'adminReport',
-            element:<AdminReport/>
-          },{ 
-            path: 'supplierBookList',
-            element: <SupplierBookList/>
-          },{
-          path:'donarPrevousDonation',
-          element: <DonarPreveusDonation/>
-          },{
-            path: 'deliveryProduct',
-            element: <DeliveryProduct />
-          }
-        ]
-      },{
-        path: 'cart',
-        element:<Cart/>
-      },{
-          path: 'checkout',
-          element: <Checkout/>
-        },{
-          path:'invoice',
-          element: <Invoice />
-        }
-    ]
-  }
-])
+            path: "addBooks",
+            element: <AddAPhotoOutlined />,
+          },
+          {
+            path: "userSellsBook",
+            element: <UserSellsBook />,
+          },
+          {
+            path: "adminBookApproved",
+            element: <AdminBookApprove />,
+          },
+          {
+            path: "adminSellsBook",
+            element: <AdminSellsBook />,
+          },
+          {
+            path: "supplierBookApproved",
+            element: <SupplierBookApprove />,
+          },
+          {
+            path: "addCategory",
+            element: <EditCategory />,
+          },
+          {
+            path: "newBook",
+            element: <NewBook />,
+          },
+          {
+            path: "oldBook",
+            element: <OldBook />,
+          },
+          {
+            path: "prevousOrder",
+            element: <PrevousOrder />,
+          },
+          {
+            path: "profilePage",
+            element: <ProfilePage />,
+          },
+          {
+            path: "adminReport",
+            element: <AdminReport />,
+          },
+          {
+            path: "supplierBookList",
+            element: <SupplierBookList />,
+          },
+          {
+            path: "donarPrevousDonation",
+            element: <DonarPreveusDonation />,
+          },
+          {
+            path: "deliveryProduct",
+            element: <DeliveryProduct />,
+          },
+
+          {
+            path: "donarPendingDonation",
+            element: <DonorPendingDonation />,
+          },
+        ],
+      },
+      {
+        path: "cart",
+        element: <Cart />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
+      },
+      {
+        path: "invoice",
+        element: <Invoice />,
+      },
+    ],
+  },
+]);
 
 function App() {
   return <RouterProvider router={routers} />;

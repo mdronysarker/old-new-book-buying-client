@@ -1,17 +1,25 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import useUserInfo from "../CustomHook/useUserInfo";
+import axios from "axios";
 
-export default function BookCollection(type) {
+const DonorPendingDonation = () => {
   const [bookList, setBookList] = useState([]);
-
+  const { userId } = useUserInfo();
+  // console.log('user id => ',userId)
   useEffect(() => {
-    axios
-      .post("http://localhost:5000/getBookCollection", type)
-      .then((res) => setBookList(res.data))
-      .catch((err) => console.log(err));
-  }, [type]);
+    if (userId) {
+      axios
+        .post("http://localhost:5000/getPendingDonation", { userId })
+        .then((res) => {
+          setBookList(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [userId]);
 
-  //   console.log("bookList  ",bookList);
+  //   console.log(bookList);
 
   return (
     <div className="font-poppins ">
@@ -25,6 +33,7 @@ export default function BookCollection(type) {
               <th>Publisher</th>
               <th>Quantity</th>
               <th>Price</th>
+              <th>Date</th>
             </tr>
           </thead>
           <tbody>
@@ -34,7 +43,7 @@ export default function BookCollection(type) {
                   <td>
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
-                        <div className="mask mask-squircle w-12 h-12">
+                        <div className="w-12 h-12 mask mask-squircle">
                           <img src={item.image} alt={item.title} />
                         </div>
                       </div>
@@ -52,6 +61,7 @@ export default function BookCollection(type) {
                   <td>{item.publisher}</td>
                   <td>{item.bookQuantity}</td>
                   <td>{item.price}</td>
+                  <td>{item.createdAt}</td>
                 </tr>
               ))}
           </tbody>
@@ -59,4 +69,6 @@ export default function BookCollection(type) {
       </div>
     </div>
   );
-}
+};
+
+export default DonorPendingDonation;

@@ -16,17 +16,18 @@ import { BiSolidUser } from "react-icons/bi";
 import { RxTriangleDown } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
+import { useCart } from "../../context/CartContext";
 
 const NavBar = () => {
   const [show, setShow] = useState(true);
-  const { user, logOut } = useContext(AuthContext);
-  const [userDropDownShow, setUserDropDownShow] = useState(false);
 
-  const handleLogOut = () => {
-    logOut()
-      .then(() => {})
-      .catch((error) => console.log(error));
-  };
+  const { user } = useContext(AuthContext);
+
+  // For cart length
+  const { productList } = useCart();
+
+  // userDtopshow for profile dorpdown
+  const [userDropDownShow, setUserDropDownShow] = useState(false);
 
   useEffect(() => {
     function scrollWidth() {
@@ -50,7 +51,7 @@ const NavBar = () => {
     document.body.addEventListener("click", (e) => {
       // console.log(ref.current);
 
-      if (userref.current.contains(e.target)) {
+      if (userref.current && userref.current.contains(e.target)) {
         setUserDropDownShow(true);
       } else {
         setUserDropDownShow(false);
@@ -63,7 +64,10 @@ const NavBar = () => {
       <div className="max-w-container mx-auto p-2">
         <Flex className="lg:flex lg:items-center">
           <div className="lg:w-3/12">
-            <Image imgsrc="./images/logo.png" />
+            <Image
+              className="w-[160px] h-[160px]"
+              imgsrc="../../images/logo.png"
+            />
           </div>
           <div className="w-auto lg:w-[600px] relative">
             <Search
@@ -123,10 +127,15 @@ const NavBar = () => {
                           </List>
                         )}
                       </Dropdown>
-                      <div>
+                      <div className="relative">
                         <Link to="/cart">
                           <MdShoppingCart className="text-2xl" />
                         </Link>
+                        {productList.length > 0 && (
+                          <span className="w-[20px] h-[20px] bg-red-500 text-white absolute rounded-full flex items-center justify-center top-[-10px] right-[-10px] ">
+                            {productList.length}
+                          </span>
+                        )}
                       </div>
                     </Flex>
                   </div>

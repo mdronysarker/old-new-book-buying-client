@@ -7,10 +7,16 @@ import useUserInfo from "../../CustomHook/useUserInfo";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 
 const Product = ({ item }) => {
   const { userId, role } = useUserInfo();
+
+  const { refreshCart } = useCart();
+
   // console.log('Role => ',role)
+  // console.log(userId);
+
   const addToCart = () => {
     const data = {
       userId: userId,
@@ -38,6 +44,7 @@ const Product = ({ item }) => {
             text: "Book Added to Cart, Now you can order from cart",
             timer: 700,
           });
+          refreshCart();
         } else if (res.data.status === false) {
           Swal.fire({
             icon: "warning",

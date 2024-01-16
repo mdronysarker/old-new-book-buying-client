@@ -7,10 +7,14 @@ import { Signup } from "../validation";
 import { useContext } from "react";
 import { AuthContext } from "../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import { BeatLoader } from "react-spinners";
 
 const Registration = () => {
+  // For button loading
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
-  const { createUser, updateProfileArea } = useContext(AuthContext)
+  const { createUser, updateProfileArea } = useContext(AuthContext);
   const [showPass, setShowPass] = useState("password");
 
   const handleShowPass = () => {
@@ -21,59 +25,62 @@ const Registration = () => {
     fullName: "",
     email: "",
     phone: "",
-    role:"user"
+    role: "user",
   };
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: Signup,
     onSubmit: () => {
-      console.log(formik.values);
-       
-        createUser(formik.values.email, formik.values.password)
-            .then(result => {
-                const loggedUser = result.user;
-                console.log(loggedUser);
-                return updateProfileArea(formik.values.fullName) // Return the promise
-            })
-            .then(() => {
-                const saveUser = { 
-                  name: formik.values.fullName, 
-                  email: formik.values.email,
-                  phone: formik.values.phone,
-                  address: formik.values.address,
-                  userRole:formik.values.role,
-                  totalMoney:0,
-                };
-                return fetch('http://localhost:5000/users', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(saveUser)
-                });
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.insertedId) {
-                    console.log('user profile info updated');
-                    formik.resetForm();
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'User created successfully.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    navigate('/');
-                }
-            })
-            .catch(error => console.log(error));
-    
+      setLoading(true);
+      // console.log(formik.values);
+
+      createUser(formik.values.email, formik.values.password)
+        .then((result) => {
+          const loggedUser = result.user;
+          console.log(loggedUser);
+          return updateProfileArea(formik.values.fullName); // Return the promise
+        })
+        .then(() => {
+          const saveUser = {
+            name: formik.values.fullName,
+            email: formik.values.email,
+            phone: formik.values.phone,
+            address: formik.values.address,
+            userRole: formik.values.role,
+            totalMoney: 0,
+          };
+          return fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(saveUser),
+          });
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.insertedId) {
+            // console.log("user profile info updated");
+            formik.resetForm();
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "User created successfully.",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/");
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   });
 
-   //console.log(formik);
+  // console.log(formik.values);
 
   return (
     <div className="max-w-container mx-auto p-2.5 mt-12">
@@ -125,7 +132,7 @@ const Registration = () => {
                 Telephone
               </h4>
               <input
-                type="number"
+                type="text"
                 name="phone"
                 placeholder="Telephone"
                 onChange={formik.handleChange}
@@ -162,10 +169,8 @@ const Registration = () => {
                 <option value="">Select Role</option>
                 <option value="user">USER</option>
                 <option value="donor">DONOR</option>
-                <option value="supplier">SUPPLIER</option>
               </select>
               <div className="relative">
-
                 <h4 className="placeholder:font-regular mb-2.5 font-dm text-base font-bold placeholder:font-dm placeholder:text-sm placeholder:text-[#767676]">
                   Password
                 </h4>
@@ -214,12 +219,19 @@ const Registration = () => {
               ) : (
                 ""
               )}
-              <button
-                type="submit"
-                className="bg-primary py-4 px-24 font-dm text-sm font-bold text-white border  hover:text-primary hover:bg-white hover:border hover:border-primary"
-              >
-                SIGN UP
-              </button>
+
+              {loading ? (
+                <button className="px-24 py-4 text-sm font-bold text-white bg-primary font-dm">
+                  <BeatLoader color="#36d7b7" />
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="bg-primary py-4 px-24 font-dm text-sm font-bold text-white border  hover:text-primary hover:bg-white hover:border hover:border-primary"
+                >
+                  SIGN UP
+                </button>
+              )}
             </form>
             <div className="mt-4">
               <p className="font-dm font-blod text-[16px] ">

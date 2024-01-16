@@ -110,7 +110,10 @@ const Footer = () => {
             </div>
           </div>
           <div className="w-[40%]">
-            <Image imgsrc="images/logo.png" />
+            <Image
+              className="w-[160px] h-[160px]"
+              imgsrc="../images/logo.png"
+            />
           </div>
         </Flex>
       </div>

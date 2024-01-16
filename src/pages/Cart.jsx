@@ -2,30 +2,28 @@ import { useEffect, useState } from "react";
 import Flex from "../components/layout/Flex";
 import { ImCross } from "react-icons/im";
 import Image from "../components/layout/Image";
-import useUserInfo from "../CustomHook/useUserInfo";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
+import { useCart } from "../context/CartContext";
 
 const Cart = () => {
-  const [productList, setProductList] = useState([]);
-  const navigate = useNavigate()
+  const { productList, loading, setLoading, setProductList } = useCart();
+
+  const navigate = useNavigate();
   const totalPrice = productList.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
 
-  const { userId } = useUserInfo();
+  const completeOrder = () => {
+    setLoading(true);
 
-        const completeOrder = () => {
-    axios
-      .post("http://localhost:5000/addCompleteOrder", { productList, userId })
-      .then((res) => {
-        if (res.data.status) {
-          navigate('/checkout')
-        }
-      })
-      .catch((err) => console.log(err));
+    if (setLoading) {
+      navigate("/checkout");
+      setLoading(false);
+    }
   };
 
   const changeQuantity = (type, index) => {
@@ -78,18 +76,6 @@ const Cart = () => {
       })
       .catch((err) => console.log(err));
   };
-
-
-  useEffect(() => {
-    axios
-      .post("http://localhost:5000/findCartItem", { userId })
-      .then((res) => {
-        const allData = res.data;
-        const newData = allData.map((data) => ({ ...data, quantity: 1 }));
-        setProductList(newData);
-      })
-      .catch((err) => console.log(err));
-  }, [userId]);
 
   // console.log(productList);
 
@@ -163,24 +149,20 @@ const Cart = () => {
             </Flex>
           </div>
           <div className="flex justify-end mt-4">
-            <button 
-              onClick={completeOrder}
-                className="px-24 py-4 text-sm font-bold text-white bg-primary font-dm" >
-                Checkout
+            {loading ? (
+              <button className="px-24 py-4 text-sm font-bold text-white bg-primary font-dm">
+                <BeatLoader color="#36d7b7" />
               </button>
-            {/* {loading ? (
-              <Link
-                href='/checkout'
+            ) : (
+              <button
+                onClick={completeOrder}
                 className="px-24 py-4 text-sm font-bold text-white bg-primary font-dm"
               >
-                <BeatLoader color="#36d7b7" />
-              </Link>
-            ) : (
-              
-              
-            )} */}
+                Checkout
+              </button>
+            )}
 
-           {/* TODO edit to checkout pages */}
+            {/* TODO edit to checkout pages */}
           </div>
         </>
       )}

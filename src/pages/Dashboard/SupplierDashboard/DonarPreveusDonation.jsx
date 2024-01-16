@@ -1,25 +1,25 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react'
-import useUserInfo from '../../../CustomHook/useUserInfo';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import useUserInfo from "../../../CustomHook/useUserInfo";
 
 const DonarPreveusDonation = () => {
-
   const [bookList, setBookList] = useState([]);
-  const {userId} = useUserInfo();
-  console.log('user id => ',userId)
-  useEffect(() => { 
-    if(userId){
-        axios
-      .post("http://localhost:5000/getDonatedBookList",{userId})
-      .then((res) => {
-        setBookList(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const { userId } = useUserInfo();
+  // console.log('user id => ',userId)
+  useEffect(() => {
+    if (userId) {
+      axios
+        .post("http://localhost:5000/getDonatedBookList", { userId })
+        .then((res) => {
+          setBookList(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-    
   }, [userId]);
+
+  // console.log(bookList);
 
   return (
     <div className="font-poppins ">
@@ -61,14 +61,14 @@ const DonarPreveusDonation = () => {
                   <td>{item.publisher}</td>
                   <td>{item.bookQuantity}</td>
                   <td>{item.price}</td>
-                  <td>{item.date}</td>
+                  <td>{item.createdAt}</td>
                 </tr>
               ))}
           </tbody>
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DonarPreveusDonation
+export default DonarPreveusDonation;

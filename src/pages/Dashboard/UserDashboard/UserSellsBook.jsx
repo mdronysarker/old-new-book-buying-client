@@ -84,6 +84,7 @@ const UserSellsBook = () => {
             language: "",
             publisher: "",
             description: "",
+            image: "",
           }}
           validationSchema={Yup.object({
             bookName: Yup.string()
@@ -99,6 +100,7 @@ const UserSellsBook = () => {
             language: Yup.string().required("Required"),
             publisher: Yup.string().required("Required"),
             description: Yup.string().required("Required"),
+            image: Yup.string().required("Required"),
           })}
           onSubmit={async (values, { resetForm }) => {
             setLoading(true);
@@ -193,6 +195,7 @@ const UserSellsBook = () => {
                     placeholder="Image"
                     name="image"
                     className="text-input border rounded-sm border-gray-600 ps-4 mt-3 h-10 w-[300px] lg:me-3"
+                    {...formik.getFieldProps("image")}
                   />
                 </div>
               </div>
@@ -238,14 +241,14 @@ const UserSellsBook = () => {
               </div>
               {loading ? (
                 <button
-                  className="btn btn-primary w-60 mt-5 justify-center mx-auto rounded-md"
+                  className=" w-60 mt-5  px-[10px] py-4 mr-6 text-sm font-bold text-white border bg-primary font-dm hover:text-primary hover:bg-white hover:border hover:border-primary border-radius: rounded"
                   type="submit"
                 >
                   <BeatLoader color="#36d7b7" />
                 </button>
               ) : (
                 <button
-                  className="btn btn-primary w-60 mt-5 justify-center mx-auto rounded-md"
+                  className=" w-60 mt-5  px-[10px] py-4 mr-6 text-sm font-bold text-white border bg-primary font-dm hover:text-primary hover:bg-white hover:border hover:border-primary border-radius: rounded"
                   type="submit"
                 >
                   Submit

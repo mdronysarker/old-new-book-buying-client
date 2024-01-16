@@ -12,7 +12,7 @@ const Newarrival = () => {
       .get("http://localhost:5000/getNewarrivalBookList")
       .then((res) => {
         setBookList(res.data);
-        console.log("new arrival book list", res.data);
+        // console.log("new arrival book list", res.data);
       })
       .catch((err) => console.log(err));
   }, []);
